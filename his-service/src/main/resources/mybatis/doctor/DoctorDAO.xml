@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdpu.his.dao.doctor.IDoctorDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        name,
+        sex,
+        age,
+        position,
+        major,
+        seniority,
+        jobNumber,
+        phone,
+        code,
+        creator,
+        lastModifier,
+        createDate,
+        lastModDate,
+        status
+    </sql>
+    <insert id="insert" parameterType="com.gdpu.his.domain.doctor.Doctor">
+        INSERT INTO fs_doctor_info (
+		    name
+		    ,sex
+		    ,age
+		    ,position
+		    ,major
+		    ,seniority
+		    ,jobNumber
+		    ,phone
+		    ,code
+		    ,creator
+		    ,lastModifier
+		    ,createDate
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{name}
+		    	,#{sex}
+		    	,#{age}
+		    	,#{position}
+		    	,#{major}
+		    	,#{seniority}
+		    	,#{jobNumber}
+		    	,#{phone}
+		    	,#{code}
+		    	,#{creator}
+		    	,#{lastModifier}
+		    	,#{createDate}
+		    	,#{lastModDate}
+		    	,#{status}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO fs_doctor_info (
+		    name
+		    ,sex
+		    ,age
+		    ,position
+		    ,major
+		    ,seniority
+		    ,jobNumber
+		    ,phone
+		    ,code
+		    ,creator
+		    ,lastModifier
+		    ,createDate
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{map.name}
+		    	,#{map.sex}
+		    	,#{map.age}
+		    	,#{map.position}
+		    	,#{map.major}
+		    	,#{map.seniority}
+		    	,#{map.jobNumber}
+		    	,#{map.phone}
+		    	,#{map.code}
+		    	,#{map.creator}
+		    	,#{map.lastModifier}
+		    	,#{map.createDate}
+		    	,#{map.lastModDate}
+		    	,#{map.status}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="com.gdpu.his.domain.doctor.Doctor">
+        UPDATE fs_doctor_info
+        <trim prefix="SET" suffixOverrides=",">
+		    name=#{name},
+		    sex=#{sex},
+		    age=#{age},
+		    position=#{position},
+		    major=#{major},
+		    seniority=#{seniority},
+		    jobNumber=#{jobNumber},
+		    phone=#{phone},
+		    code=#{code},
+		    creator=#{creator},
+		    lastModifier=#{lastModifier},
+		    createDate=#{createDate},
+		    lastModDate=#{lastModDate},
+		    status=#{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE fs_doctor_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.sex!=null">
+                sex = #{map.sex},
+            </if>
+            <if test="map.age!=null">
+                age = #{map.age},
+            </if>
+            <if test="map.position!=null">
+                position = #{map.position},
+            </if>
+            <if test="map.major!=null">
+                major = #{map.major},
+            </if>
+            <if test="map.seniority!=null">
+                seniority = #{map.seniority},
+            </if>
+            <if test="map.jobNumber!=null">
+                jobNumber = #{map.jobNumber},
+            </if>
+            <if test="map.phone!=null">
+                phone = #{map.phone},
+            </if>
+            <if test="map.code!=null">
+                code = #{map.code},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE fs_doctor_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.sex!=null">
+                sex = #{update.sex},
+            </if>
+            <if test="update.age!=null">
+                age = #{update.age},
+            </if>
+            <if test="update.position!=null">
+                position = #{update.position},
+            </if>
+            <if test="update.major!=null">
+                major = #{update.major},
+            </if>
+            <if test="update.seniority!=null">
+                seniority = #{update.seniority},
+            </if>
+            <if test="update.jobNumber!=null">
+                jobNumber = #{update.jobNumber},
+            </if>
+            <if test="update.phone!=null">
+                phone = #{update.phone},
+            </if>
+            <if test="update.code!=null">
+                code = #{update.code},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.position!=null">
+                AND position = #{condition.position}
+            </if>
+            <if test="condition.major!=null">
+                AND major = #{condition.major}
+            </if>
+            <if test="condition.seniority!=null">
+                AND seniority = #{condition.seniority}
+            </if>
+            <if test="condition.jobNumber!=null">
+                AND jobNumber = #{condition.jobNumber}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="com.gdpu.his.domain.doctor.Doctor">
+        UPDATE fs_doctor_info
+        <trim prefix="SET" suffixOverrides=",">
+            name = #{name},
+            sex = #{sex},
+            age = #{age},
+            position = #{position},
+            major = #{major},
+            seniority = #{seniority},
+            jobNumber = #{jobNumber},
+            phone = #{phone},
+            code = #{code},
+            creator = #{creator},
+            lastModifier = #{lastModifier},
+            createDate = #{createDate},
+            lastModDate = #{lastModDate},
+            status = #{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM fs_doctor_info
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="name!=null">
+                AND name = #{name}
+            </if>
+            <if test="sex!=null">
+                AND sex = #{sex}
+            </if>
+            <if test="age!=null">
+                AND age = #{age}
+            </if>
+            <if test="position!=null">
+                AND position = #{position}
+            </if>
+            <if test="major!=null">
+                AND major = #{major}
+            </if>
+            <if test="seniority!=null">
+                AND seniority = #{seniority}
+            </if>
+            <if test="jobNumber!=null">
+                AND jobNumber = #{jobNumber}
+            </if>
+            <if test="phone!=null">
+                AND phone = #{phone}
+            </if>
+            <if test="code!=null">
+                AND code = #{code}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM fs_doctor_info WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.name!=null">
+                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.sex!=null">
+                ${condition.groupOp}   sex  ${condition.sex.op}  #{condition.sex.data}
+            </if>
+            <if test="condition.age!=null">
+                ${condition.groupOp}   age  ${condition.age.op}  #{condition.age.data}
+            </if>
+            <if test="condition.position!=null">
+                ${condition.groupOp}   position  ${condition.position.op}  #{condition.position.data}
+            </if>
+            <if test="condition.major!=null">
+                ${condition.groupOp}   major  ${condition.major.op}  #{condition.major.data}
+            </if>
+            <if test="condition.seniority!=null">
+                ${condition.groupOp}   seniority  ${condition.seniority.op}  #{condition.seniority.data}
+            </if>
+            <if test="condition.jobNumber!=null">
+                ${condition.groupOp}   jobNumber  ${condition.jobNumber.op}  #{condition.jobNumber.data}
+            </if>
+            <if test="condition.phone!=null">
+                ${condition.groupOp}   phone  ${condition.phone.op}  #{condition.phone.data}
+            </if>
+            <if test="condition.code!=null">
+                ${condition.groupOp}   code  ${condition.code.op}  #{condition.code.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="name!=null">
+                AND name like CONCAT('%', #{name} , '%')
+            </if>
+            <if test="sex!=null">
+                AND sex like CONCAT('%', #{sex} , '%')
+            </if>
+            <if test="age!=null">
+                AND age like CONCAT('%', #{age} , '%')
+            </if>
+            <if test="position!=null">
+                AND position like CONCAT('%', #{position} , '%')
+            </if>
+            <if test="major!=null">
+                AND major like CONCAT('%', #{major} , '%')
+            </if>
+            <if test="seniority!=null">
+                AND seniority like CONCAT('%', #{seniority} , '%')
+            </if>
+            <if test="jobNumber!=null">
+                AND jobNumber like CONCAT('%', #{jobNumber} , '%')
+            </if>
+            <if test="phone!=null">
+                AND phone like CONCAT('%', #{phone} , '%')
+            </if>
+            <if test="code!=null">
+                AND code like CONCAT('%', #{code} , '%')
+            </if>
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.position!=null">
+                AND position = #{condition.position}
+            </if>
+            <if test="condition.major!=null">
+                AND major = #{condition.major}
+            </if>
+            <if test="condition.seniority!=null">
+                AND seniority = #{condition.seniority}
+            </if>
+            <if test="condition.jobNumber!=null">
+                AND jobNumber = #{condition.jobNumber}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.doctor.Doctor">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_doctor_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.position!=null">
+                AND position = #{condition.position}
+            </if>
+            <if test="condition.major!=null">
+                AND major = #{condition.major}
+            </if>
+            <if test="condition.seniority!=null">
+                AND seniority = #{condition.seniority}
+            </if>
+            <if test="condition.jobNumber!=null">
+                AND jobNumber = #{condition.jobNumber}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.code!=null">
+                AND code = #{condition.code}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM fs_doctor_info
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="name!=null">
+               ${groupOp} name ${name.op}  #{name.data}
+           </if>
+           <if test="sex!=null">
+               ${groupOp} sex ${sex.op}  #{sex.data}
+           </if>
+           <if test="age!=null">
+               ${groupOp} age ${age.op}  #{age.data}
+           </if>
+           <if test="position!=null">
+               ${groupOp} position ${position.op}  #{position.data}
+           </if>
+           <if test="major!=null">
+               ${groupOp} major ${major.op}  #{major.data}
+           </if>
+           <if test="seniority!=null">
+               ${groupOp} seniority ${seniority.op}  #{seniority.data}
+           </if>
+           <if test="jobNumber!=null">
+               ${groupOp} jobNumber ${jobNumber.op}  #{jobNumber.data}
+           </if>
+           <if test="phone!=null">
+               ${groupOp} phone ${phone.op}  #{phone.data}
+           </if>
+           <if test="code!=null">
+               ${groupOp} code ${code.op}  #{code.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM fs_doctor_info
+    </select>
+   
+</mapper>
