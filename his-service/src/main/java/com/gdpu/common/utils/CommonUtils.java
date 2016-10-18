@@ -2,6 +2,7 @@ package com.gdpu.common.utils;
 
 
 import com.gdpu.common.exception.BizException;
+import org.apache.shiro.crypto.hash.Md5Hash;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -146,11 +147,22 @@ public class CommonUtils {
         return map;
     }
 
+    /**
+     * 获取加密后的密码（md5散列一次）
+     * @param original 原始密码
+     * @param salty    加密盐
+     * @return  返回，加密后的密码
+     */
+    public static String getPassword(String original, String salty) {
+        return new Md5Hash(original, salty, 1).toString();
+    }
+
     public static void main(String[] args) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        for (int i = 0; i < 10; i++) {
-            Date date = randomDate("2016-08-20", "2016-09-10");
-            System.out.println(format.format(date));
-        }
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        for (int i = 0; i < 10; i++) {
+//            Date date = randomDate("2016-08-20", "2016-09-10");
+//            System.out.println(format.format(date));
+//        }
+        System.out.println(getPassword("123123", "simagle"));
     }
 }

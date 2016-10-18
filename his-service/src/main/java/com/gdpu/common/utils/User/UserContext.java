@@ -2,6 +2,13 @@ package com.gdpu.common.utils.User;
 
 
 import com.gdpu.common.domain.AccountDto;
+import com.gdpu.common.exception.BizException;
+import com.gdpu.common.system.filter.HISRequestFilter;
+import com.gdpu.common.utils.ERRORCODE;
+import com.gdpu.his.domain.sys.Rescuer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by 郭旭辉 on 2016/3/21.
@@ -24,21 +31,13 @@ public class UserContext {
      * @return 返回 AccountDto
      */
     public static AccountDto getCurrentUser(){
-//        HttpServletRequest request = HISRequestFilter.getRequest();
-//        //获取access_token
-//        Cookie cookie = HttpUtils.getCookie(request.getCookies(),HttpUtils.ACCESS_TOKEN);
-//        if (cookie != null){
-//            String token = cookie.getValue();
-//            User user = (User) request.getSession().getAttribute(token);
-//            if (user != null){
-//                return setAccount(user);
-//            }else {
-//                throw new BizException(ERRORCODE.ILLEGAL_LOGIN.getCode(), ERRORCODE.ILLEGAL_LOGIN.getMessage());
-//            }
-//        }else {
-//            throw new BizException(ERRORCODE.ILLEGAL_LOGIN.getCode(), ERRORCODE.ILLEGAL_LOGIN.getMessage());
-//        }
-        return null;
+        HttpServletRequest request = HISRequestFilter.getRequest();
+        HttpSession session = request.getSession();
+        Rescuer rescuer = (Rescuer) session.getAttribute("USER");
+        if(rescuer == null){
+            throw new BizException(ERRORCODE.TOKEN_INVALID.getCode(), ERRORCODE.TOKEN_INVALID.getMessage());
+        }
+        return setAccount(rescuer);
     }
 
     /**
@@ -57,14 +56,12 @@ public class UserContext {
 //        context.remove();
 //    }
 
-//    private static AccountDto setAccount(User user){
-//        AccountDto accountDto = new AccountDto();
-//        accountDto.setUid(user.getCode());
-//        accountDto.setUsername(user.getUsername());
-//        accountDto.setDepartmentId(user.getDepartmentId());
-//        accountDto.setName(user.getName());
-//        accountDto.setPositionId(user.getPositionId());
-//        accountDto.setJobNumber(user.getJobNumber());
-//        return accountDto;
-//    }
+    private static AccountDto setAccount(Rescuer user){
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUid(user.getCode());
+        accountDto.setUsername(user.getUsername());
+        accountDto.setName(user.getName());
+        accountDto.setJobNumber(user.getJobNumber());
+        return accountDto;
+    }
 }

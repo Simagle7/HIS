@@ -30,27 +30,34 @@
             min-width: 60px;
         }
 
-        #addDoctor table th {
+       .detail table th {
             font-size: 14px;
             background-color: #1ab394;
             color: #ffffff;
         }
 
-        #addDoctor table td {
+        .detail table td {
             background-color: #f3f3f4;
         }
 
-        #addDoctor table td input[type='text'] {
+       .detail table td input[type='text'] {
             width: 150px;
+        }
+        .status{
+            color: #fff;
+            border: 1px solid;
+            padding: 9px;
+            font-size: 13px;
+            border-radius: 5px;
+        }
+        .status-info{
+            background-color: #23C6C8;
+        }
+        .status-warning{
+            background-color: #F8AC59;
         }
     </style>
 </head>
-<%
-    Date dNow = new Date( );
-    SimpleDateFormat ft =
-            new SimpleDateFormat ("yyyy-MM-dd");
-%>
-
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <!-- Panel Other -->
@@ -74,7 +81,7 @@
                         <div class="example">
                             <div>
                                 <form action="">
-                                    <span><b>医生姓名：</b></span>
+                                    <span><b>姓名：</b></span>
                                     <label class="search-label"><input class="form-control input-outline" type="text"
                                                                        name="name"></label>
                                     <span><b>工号：</b></span>
@@ -104,43 +111,34 @@
                                                             <%--<i class="fa fa-laptop modal-icon"></i>--%>
                                                             <%--<h4 class="modal-title">窗口标题</h4>--%>
                                                             <span class="pull-left"
-                                                                  style="font-size: 14px"> <b>添加医生 </b>(注：带 * 号为必填项)</span>
+                                                                  style="font-size: 14px"> <b>添加 </b>(注：带 * 号为必填项,账号默认密码为123456)</span>
                                                         </div>
                                                         <small class="font-bold">
                                                             <div class="modal-body" style="padding: 0">
-                                                                <form id="addDoctor" action="addDoctor" method="post">
+                                                                <form class="detail" action="addRescuer" method="post">
                                                                     <table class="table table-bordered"
                                                                            style="margin-bottom: 0;">
                                                                         <tr>
-                                                                            <th width="15%"><span class="pull-right"><b>*&nbsp;</b>姓名：</span>
-                                                                            </th>
-                                                                            <td width="35%"><input type="text"
-                                                                                                   name="name"></td>
-                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;创建时间:</span>
-                                                                            </th>
-                                                                            <td width="35%"><%= ft.format(dNow) %>
-                                                                            </td>
+                                                                            <th width="15%"><span class="pull-right"><b>*&nbsp;</b>姓名：</span></th>
+                                                                            <td width="35%"><input type="text" name="name"></td>
+                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;账号:</span></th>
+                                                                            <td width="35%"><input type="text" name="username"></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp; 职务：</span>
-                                                                            </th>
-                                                                            <td width="35%"><input type="text"
-                                                                                                   name="position"></td>
-                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;工号:</span>
-                                                                            </th>
-                                                                            <td width="35%"><input type="text"
-                                                                                                   name="jobNumber">
-                                                                            </td>
+                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp; 职务：</span></th>
+                                                                            <td width="35%"><input type="text" name="position"></td>
+                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;工号:</span></th>
+                                                                            <td width="35%"><input type="text" name="jobNumber"></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;电话：</span>
-                                                                            </th>
-                                                                            <td width="35%"><input type="text"
-                                                                                                   name="phone"></td>
-                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;工龄:</span>
-                                                                            </th>
-                                                                            <td width="35%"><input type="text"
-                                                                                                   name="seniority">
+                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;电话：</span></th>
+                                                                            <td width="35%"><input type="text" name="phone"></td>
+                                                                            <th width="15%"><span class="pull-right"><b>*</b>&nbsp;类别:</span></th>
+                                                                            <td width="35%">
+                                                                                <input type="radio" name="category" value="0"
+                                                                                       checked>医生&nbsp;
+                                                                                <input type="radio" name="category"
+                                                                                       value="1">护士
                                                                             </td>
                                                                         </tr>
 
@@ -160,7 +158,7 @@
                                                                         </tr>
 
                                                                         <tr>
-                                                                            <th><span class="pull-right"><b>*</b>&nbsp;主治：</span>
+                                                                            <th><span class="pull-right"><b>*</b>&nbsp;专长：</span>
                                                                             </th>
                                                                             <td colspan="3">
                                                                                 <textarea name="major"
@@ -199,29 +197,122 @@
                             <thead>
                             <tr>
                                 <th width="2%"><input type="checkbox"></th>
-                                <th width="10%">姓名</th>
-                                <th width="10%">工号</th>
-                                <th width="10%">联系电话</th>
-                                <th width="13%">职务</th>
+                                <th width="8%">姓名</th>
+                                <th width="10%">账号</th>
+                                <th width="7%">工号</th>
+                                <th width="10%">职务</th>
                                 <th width="20%">主治</th>
                                 <th width="15%">医生代码</th>
+                                <th width="8%">状态</th>
                                 <th width="20%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${doctors}" var="el">
+                            <c:forEach items="${data.rows}" var="el">
                                 <tr>
                                     <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
                                     <td><c:out value="${el.name}" /></td>
+                                    <td><c:out value="${el.username}" /></td>
                                     <td><c:out value="${el.jobNumber}" /></td>
-                                    <td><c:out value="${el.phone}" /></td>
                                     <td><c:out value="${el.position}" /></td>
                                     <td><c:out value="${el.major}" /></td>
                                     <td><c:out value="${el.code}" /></td>
                                     <td>
-                                        <button type="button" class="btn  btn-info">
-                                            修改
-                                        </button>
+                                        <c:if test="${el.status == 0}">
+                                            <span class="status status-info"><i class="fa fa-check"></i>正常</span>
+                                        </c:if>
+                                        <c:if test="${el.status == 1}">
+                                            <span class="status status-warning"><i class="fa fa-times"></i>停职</span>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" id="updateBtn">修改</button>
+                                            <%--<a href="queryOne?id=<c:out value="${el.id}"/>" style="color: #ffffff">修改</a></button>--%>
+                                        <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content animated bounceInRight"
+                                                     style="width: 600px;">
+                                                    <div class="modal-header" style="padding: 10px 15px">
+                                                        <button type="button" class="close" data-dismiss="modal">
+                                                            <span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+                                                        </button>
+
+                                                            <span class="pull-left"
+                                                                  style="font-size: 14px"> <b>修改 </b>(注：带 * 号为必填项,账号默认密码为123456)</span>
+                                                    </div>
+                                                    <small class="font-bold">
+                                                        <div class="modal-body" style="padding: 0">
+                                                            <form class="detail" action="addRescuer" method="post">
+                                                                <table class="table table-bordered"
+                                                                       style="margin-bottom: 0;">
+                                                                    <tr>
+                                                                        <th width="15%"><span class="pull-right"><b>*&nbsp;</b>姓名：</span></th>
+                                                                        <td width="35%"><input type="text" name="name"></td>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;账号:</span></th>
+                                                                        <td width="35%"><input type="text" name="username"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp; 职务：</span></th>
+                                                                        <td width="35%"><input type="text" name="position"></td>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;工号:</span></th>
+                                                                        <td width="35%"><input type="text" name="jobNumber"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;电话：</span></th>
+                                                                        <td width="35%"><input type="text" name="phone"></td>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;类别:</span></th>
+                                                                        <td width="35%">
+                                                                            <input type="radio" name="category" value="0"
+                                                                                   checked>医生&nbsp;
+                                                                            <input type="radio" name="category"
+                                                                                   value="1">护士
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;年龄：</span>
+                                                                        </th>
+                                                                        <td width="35%"><input type="text"
+                                                                                               name="age"></td>
+                                                                        <th width="15%"><span class="pull-right"><b>*</b>&nbsp;性别:</span>
+                                                                        </th>
+                                                                        <td width="35%">
+                                                                            <input type="radio" name="sex" value="0"
+                                                                                   checked>男&nbsp;
+                                                                            <input type="radio" name="sex"
+                                                                                   value="1">女
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <th><span class="pull-right"><b>*</b>&nbsp;专长：</span>
+                                                                        </th>
+                                                                        <td colspan="3">
+                                                                                <textarea name="major"
+                                                                                          style="width: 400px; height: 80px;"></textarea>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                                <div style="margin: 5px; text-align: center">
+                                                                    <button class="btn btn-primary" type="submit">保存
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-white"
+                                                                            data-dismiss="modal">关闭
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </small>
+                                                </div>
+                                                <small class="font-bold">
+                                                </small>
+                                            </div>
+                                            <small class="font-bold">
+                                            </small>
+                                        </div>
                                         <c:choose>
                                             <c:when test="${el.status == 1}">
                                                 <button type="button" class="btn  btn-info">
@@ -291,6 +382,6 @@
 <script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 
 <!--引入本地js-->
-<script src="/js/module/userManager/doctor.js"></script>
+<script src="/js/module/userManager/rescuer.js"></script>
 </body>
 </html>

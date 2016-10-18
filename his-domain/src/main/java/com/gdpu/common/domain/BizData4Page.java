@@ -13,11 +13,29 @@ public class BizData4Page<T> implements Serializable {
     private int total = 0;
     private int pageSize = 10;
     private int records = 0;
+    private int offset = 0;
+    private int endOffset = 0;
     private List<T> rows;
     private Map<String, Object> conditions = new HashMap<String, Object>();
     private Map<List, Object> userData;
 
     public BizData4Page(){}
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getEndOffset() {
+        return endOffset;
+    }
+
+    public void setEndOffset(int endOffset) {
+        this.endOffset = endOffset;
+    }
 
     public int getPage() {
         return page;

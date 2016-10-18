@@ -21,6 +21,8 @@ public class PageUtils {
             total = total + 1;
         }
         bizData4Page.setTotal(total);
+        bizData4Page.setOffset((pageNo - 1) * pageSize);
+        bizData4Page.setEndOffset(bizData4Page.getOffset() + pageSize);
         return bizData4Page;
     }
 }

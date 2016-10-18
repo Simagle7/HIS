@@ -75,8 +75,8 @@ public class MD5Utils {
     }
 
     public static void main(String[] args){
-        System.out.println(getMD5("123456"+SALT));
-        System.out.println(getToken("simagle","123123"));
+        System.out.println(getMD5("123123simagle"));
+//        System.out.println(getToken("simagle","123123"));
     }
 
 }

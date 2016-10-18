@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdpu.his.dao.sys.IRescuerDAO">
+	<!-- 在这里存放用户自定义的映射配置（注：RescuerDAO.xml里各节点的ID不能在这里重复出现）  -->
+
+	<select id="queryPageEx" resultType="com.gdpu.his.domain.sys.Rescuer">
+		SELECT * FROM fs_rescuer_info
+		<where>
+			<if test="condition.name != null and condition.name != ''">
+				name like '%${condition.name}%'
+			</if>
+			<if test="condition.username != null and condition.username != ''">
+				AND username = #{condition.username}
+			</if>
+			<if test="condition.jobNumber != null and condition.jobNumber != ''">
+				AND jobNumber = #{condition.jobNumber}}
+			</if>
+		</where>
+		<if test="offset != null">
+			limit ${offset},${rows}
+		</if>
+	</select>
+	<select id="countEx" resultType="java.lang.Integer">
+		SELECT count(1) FROM fs_rescuer_info
+		<where>
+			<if test="condition.name != null and condition.name != ''">
+				name like '%${condition.name}%'
+			</if>
+			<if test="condition.username != null and condition.username != ''">
+				AND username = #{condition.username}
+			</if>
+			<if test="condition.jobNumber != null and condition.jobNumber != ''">
+				AND jobNumber = #{condition.jobNumber}}
+			</if>
+		</where>
+	</select>
+</mapper>
