@@ -20,10 +20,8 @@ package com.gdpu.his.service.sys;
 
 import com.gdpu.common.domain.AccountDto;
 import com.gdpu.common.exception.BizException;
-import com.gdpu.common.utils.CommonUtils;
-import com.gdpu.common.utils.DataStatusEnum;
-import com.gdpu.common.utils.ERRORCODE;
-import com.gdpu.common.utils.PageUtils;
+import com.gdpu.common.utils.*;
+import com.gdpu.common.utils.User.UserContext;
 import com.gdpu.his.dao.IHISBaseDAO;
 import com.gdpu.his.dao.sys.IRescuerDAO;
 import com.gdpu.his.domain.sys.Rescuer;
@@ -91,9 +89,41 @@ public class RescuerServiceImpl extends AbstractHISPageService<IHISBaseDAO<Rescu
         rescuer.setCreateDate(System.currentTimeMillis());
         rescuer.setCreator(currentUser.getUid());
         rescuer.setStatus(DataStatusEnum.ENABLED.getValue());
-        if(this.add(rescuer) <= 0) {
+        if (this.add(rescuer) <= 0) {
             throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
         }
         return queryPage(new RescuerParam(), 1, 10);
+    }
+
+    @Override
+    public ModelAndView save(RescuerParam param, AccountDto currentUser) {
+        param.setLastModDate(System.currentTimeMillis());
+        param.setLastModifier(currentUser.getUid());
+        if (this.updateMap(param.toMap()) <= 0) {
+            throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+        }
+        //刷新视图
+        return queryPage(new RescuerParam(), 1, 10);
+    }
+
+    @Override
+    public String disabledOrEnabled(long id, Integer status) {
+        RescuerParam param = new RescuerParam();
+        param.setId(id);
+        param.setStatus(status);
+        param.setLastModDate(System.currentTimeMillis());
+        param.setLastModifier(UserContext.getCurrentUser().getUid());
+        if(this.updateMap(param.toMap()) <= 0){
+            throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+        }
+        return RETURNCODE.UPDATE_COMPLETE.getMessage();
+    }
+
+    @Override
+    public String deleteOne(long id) {
+        if(this.deleteById(id) <= 0){
+            throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+        }
+        return RETURNCODE.DELETE_COMPLETE.getMessage();
     }
 }

@@ -60,4 +60,27 @@ public interface IRescuerService<D extends IHISBaseDAO<T>, T extends BaseDomain>
      * @return 返回，视图模型
      */
     ModelAndView addRescuer(Rescuer rescuer, AccountDto currentUser);
+
+    /**
+     * 保存医疗人员信息
+     * @param param         更新参数
+     * @param currentUser   当前操作者
+     * @return  返回，模型视图
+     */
+    ModelAndView save(RescuerParam param, AccountDto currentUser);
+
+    /**
+     * 更新状态
+     * @param id        id
+     * @param status    状态值，0：正常，1：停职
+     * @return 返回，操作码
+     */
+    String disabledOrEnabled(long id, Integer status);
+
+    /**
+     * 删除一个
+     * @param id    id
+     * @return  返回， 视图模型
+     */
+    String deleteOne(long id);
 }

@@ -10,12 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by 郭旭辉 on 2016/10/17.
@@ -76,16 +75,46 @@ public class UserController {
     }
 
     /**
-     * 回显信息
+     * 回显一条医护人员信息
      * @param id    id
      * @return  返回，视图模型
      */
-    @RequestMapping(value = "/queryOne")
-    public Map<String, Object> queryOne(httlong id){
-        Map<String, Object> map = new HashMap<>();
-        map.put("item", rescuerService.findOne(RescuerParam.F_ID, id));
-        return map;
+    @RequestMapping(value = "/update")
+    public ModelAndView update(long id){
+        ModelAndView mav = new ModelAndView("userManager/update");
+        mav.addObject("item", rescuerService.findOne(RescuerParam.F_ID, id));
+        return mav;
     }
+
+
+    /**
+     * 保存一条医护人员的更新信息
+     * @param param     更新参数
+     * @return  返回，视图模型
+     */
+    @RequestMapping(value = "/save")
+    public ModelAndView save(RescuerParam param){
+        return rescuerService.save(param, UserContext.getCurrentUser());
+    }
+
+    /**
+     * 启用停职
+     * @param id    id
+     * @param status    状态
+     * @return  返回，数据
+     */
+    @ResponseBody
+    @RequestMapping(value = "/disabledOrEnabled")
+    public String disabledOrEnabled(long id,Integer status){
+        return rescuerService.disabledOrEnabled(id, status);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteOne")
+    public String deleteOne(long id){
+        return rescuerService.deleteOne(id);
+    }
+
 
 
     @RequestMapping(value = "/welcome")
