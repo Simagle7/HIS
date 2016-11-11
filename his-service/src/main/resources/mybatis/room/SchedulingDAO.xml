@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdpu.his.dao.room.ISchedulingDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        目标类型,
+        目标主键,
+        医护人员主键,
+        时间点,
+        星期,
+        第几周,
+        创建人,
+        创建时间,
+        修改人,
+        修改时间,
+        状态
+    </sql>
+    <insert id="insert" parameterType="com.gdpu.his.domain.room.Scheduling">
+        INSERT INTO fs_room_scheduling (
+		    目标类型
+		    ,目标主键
+		    ,医护人员主键
+		    ,时间点
+		    ,星期
+		    ,第几周
+		    ,创建人
+		    ,创建时间
+		    ,修改人
+		    ,修改时间
+		    ,状态
+        ) VALUES (
+		    	#{目标类型}
+		    	,#{目标主键}
+		    	,#{医护人员主键}
+		    	,#{时间点}
+		    	,#{星期}
+		    	,#{第几周}
+		    	,#{创建人}
+		    	,#{创建时间}
+		    	,#{修改人}
+		    	,#{修改时间}
+		    	,#{状态}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO fs_room_scheduling (
+		    目标类型
+		    ,目标主键
+		    ,医护人员主键
+		    ,时间点
+		    ,星期
+		    ,第几周
+		    ,创建人
+		    ,创建时间
+		    ,修改人
+		    ,修改时间
+		    ,状态
+        ) VALUES (
+		    	#{map.目标类型}
+		    	,#{map.目标主键}
+		    	,#{map.医护人员主键}
+		    	,#{map.时间点}
+		    	,#{map.星期}
+		    	,#{map.第几周}
+		    	,#{map.创建人}
+		    	,#{map.创建时间}
+		    	,#{map.修改人}
+		    	,#{map.修改时间}
+		    	,#{map.状态}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="com.gdpu.his.domain.room.Scheduling">
+        UPDATE fs_room_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+		    目标类型=#{目标类型},
+		    目标主键=#{目标主键},
+		    医护人员主键=#{医护人员主键},
+		    时间点=#{时间点},
+		    星期=#{星期},
+		    第几周=#{第几周},
+		    创建人=#{创建人},
+		    创建时间=#{创建时间},
+		    修改人=#{修改人},
+		    修改时间=#{修改时间},
+		    状态=#{状态},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE fs_room_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.目标类型!=null">
+                目标类型 = #{map.目标类型},
+            </if>
+            <if test="map.目标主键!=null">
+                目标主键 = #{map.目标主键},
+            </if>
+            <if test="map.医护人员主键!=null">
+                医护人员主键 = #{map.医护人员主键},
+            </if>
+            <if test="map.时间点!=null">
+                时间点 = #{map.时间点},
+            </if>
+            <if test="map.星期!=null">
+                星期 = #{map.星期},
+            </if>
+            <if test="map.第几周!=null">
+                第几周 = #{map.第几周},
+            </if>
+            <if test="map.创建人!=null">
+                创建人 = #{map.创建人},
+            </if>
+            <if test="map.创建时间!=null">
+                创建时间 = #{map.创建时间},
+            </if>
+            <if test="map.修改人!=null">
+                修改人 = #{map.修改人},
+            </if>
+            <if test="map.修改时间!=null">
+                修改时间 = #{map.修改时间},
+            </if>
+            <if test="map.状态!=null">
+                状态 = #{map.状态},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE fs_room_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.目标类型!=null">
+                目标类型 = #{update.目标类型},
+            </if>
+            <if test="update.目标主键!=null">
+                目标主键 = #{update.目标主键},
+            </if>
+            <if test="update.医护人员主键!=null">
+                医护人员主键 = #{update.医护人员主键},
+            </if>
+            <if test="update.时间点!=null">
+                时间点 = #{update.时间点},
+            </if>
+            <if test="update.星期!=null">
+                星期 = #{update.星期},
+            </if>
+            <if test="update.第几周!=null">
+                第几周 = #{update.第几周},
+            </if>
+            <if test="update.创建人!=null">
+                创建人 = #{update.创建人},
+            </if>
+            <if test="update.创建时间!=null">
+                创建时间 = #{update.创建时间},
+            </if>
+            <if test="update.修改人!=null">
+                修改人 = #{update.修改人},
+            </if>
+            <if test="update.修改时间!=null">
+                修改时间 = #{update.修改时间},
+            </if>
+            <if test="update.状态!=null">
+                状态 = #{update.状态},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.目标类型!=null">
+                AND 目标类型 = #{condition.目标类型}
+            </if>
+            <if test="condition.目标主键!=null">
+                AND 目标主键 = #{condition.目标主键}
+            </if>
+            <if test="condition.医护人员主键!=null">
+                AND 医护人员主键 = #{condition.医护人员主键}
+            </if>
+            <if test="condition.时间点!=null">
+                AND 时间点 = #{condition.时间点}
+            </if>
+            <if test="condition.星期!=null">
+                AND 星期 = #{condition.星期}
+            </if>
+            <if test="condition.第几周!=null">
+                AND 第几周 = #{condition.第几周}
+            </if>
+            <if test="condition.创建人!=null">
+                AND 创建人 = #{condition.创建人}
+            </if>
+            <if test="condition.创建时间!=null">
+                AND 创建时间 = #{condition.创建时间}
+            </if>
+            <if test="condition.修改人!=null">
+                AND 修改人 = #{condition.修改人}
+            </if>
+            <if test="condition.修改时间!=null">
+                AND 修改时间 = #{condition.修改时间}
+            </if>
+            <if test="condition.状态!=null">
+                AND 状态 = #{condition.状态}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="com.gdpu.his.domain.room.Scheduling">
+        UPDATE fs_room_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+            目标类型 = #{目标类型},
+            目标主键 = #{目标主键},
+            医护人员主键 = #{医护人员主键},
+            时间点 = #{时间点},
+            星期 = #{星期},
+            第几周 = #{第几周},
+            创建人 = #{创建人},
+            创建时间 = #{创建时间},
+            修改人 = #{修改人},
+            修改时间 = #{修改时间},
+            状态 = #{状态},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM fs_room_scheduling
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="目标类型!=null">
+                AND 目标类型 = #{目标类型}
+            </if>
+            <if test="目标主键!=null">
+                AND 目标主键 = #{目标主键}
+            </if>
+            <if test="医护人员主键!=null">
+                AND 医护人员主键 = #{医护人员主键}
+            </if>
+            <if test="时间点!=null">
+                AND 时间点 = #{时间点}
+            </if>
+            <if test="星期!=null">
+                AND 星期 = #{星期}
+            </if>
+            <if test="第几周!=null">
+                AND 第几周 = #{第几周}
+            </if>
+            <if test="创建人!=null">
+                AND 创建人 = #{创建人}
+            </if>
+            <if test="创建时间!=null">
+                AND 创建时间 = #{创建时间}
+            </if>
+            <if test="修改人!=null">
+                AND 修改人 = #{修改人}
+            </if>
+            <if test="修改时间!=null">
+                AND 修改时间 = #{修改时间}
+            </if>
+            <if test="状态!=null">
+                AND 状态 = #{状态}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM fs_room_scheduling WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.目标类型!=null">
+                ${condition.groupOp}   目标类型  ${condition.目标类型.op}  #{condition.目标类型.data}
+            </if>
+            <if test="condition.目标主键!=null">
+                ${condition.groupOp}   目标主键  ${condition.目标主键.op}  #{condition.目标主键.data}
+            </if>
+            <if test="condition.医护人员主键!=null">
+                ${condition.groupOp}   医护人员主键  ${condition.医护人员主键.op}  #{condition.医护人员主键.data}
+            </if>
+            <if test="condition.时间点!=null">
+                ${condition.groupOp}   时间点  ${condition.时间点.op}  #{condition.时间点.data}
+            </if>
+            <if test="condition.星期!=null">
+                ${condition.groupOp}   星期  ${condition.星期.op}  #{condition.星期.data}
+            </if>
+            <if test="condition.第几周!=null">
+                ${condition.groupOp}   第几周  ${condition.第几周.op}  #{condition.第几周.data}
+            </if>
+            <if test="condition.创建人!=null">
+                ${condition.groupOp}   创建人  ${condition.创建人.op}  #{condition.创建人.data}
+            </if>
+            <if test="condition.创建时间!=null">
+                ${condition.groupOp}   创建时间  ${condition.创建时间.op}  #{condition.创建时间.data}
+            </if>
+            <if test="condition.修改人!=null">
+                ${condition.groupOp}   修改人  ${condition.修改人.op}  #{condition.修改人.data}
+            </if>
+            <if test="condition.修改时间!=null">
+                ${condition.groupOp}   修改时间  ${condition.修改时间.op}  #{condition.修改时间.data}
+            </if>
+            <if test="condition.状态!=null">
+                ${condition.groupOp}   状态  ${condition.状态.op}  #{condition.状态.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="目标类型!=null">
+                AND 目标类型 like CONCAT('%', #{目标类型} , '%')
+            </if>
+            <if test="目标主键!=null">
+                AND 目标主键 like CONCAT('%', #{目标主键} , '%')
+            </if>
+            <if test="医护人员主键!=null">
+                AND 医护人员主键 like CONCAT('%', #{医护人员主键} , '%')
+            </if>
+            <if test="时间点!=null">
+                AND 时间点 like CONCAT('%', #{时间点} , '%')
+            </if>
+            <if test="星期!=null">
+                AND 星期 like CONCAT('%', #{星期} , '%')
+            </if>
+            <if test="第几周!=null">
+                AND 第几周 like CONCAT('%', #{第几周} , '%')
+            </if>
+            <if test="创建人!=null">
+                AND 创建人 like CONCAT('%', #{创建人} , '%')
+            </if>
+            <if test="创建时间!=null">
+                AND 创建时间 like CONCAT('%', #{创建时间} , '%')
+            </if>
+            <if test="修改人!=null">
+                AND 修改人 like CONCAT('%', #{修改人} , '%')
+            </if>
+            <if test="修改时间!=null">
+                AND 修改时间 like CONCAT('%', #{修改时间} , '%')
+            </if>
+            <if test="状态!=null">
+                AND 状态 like CONCAT('%', #{状态} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.目标类型!=null">
+                AND 目标类型 = #{condition.目标类型}
+            </if>
+            <if test="condition.目标主键!=null">
+                AND 目标主键 = #{condition.目标主键}
+            </if>
+            <if test="condition.医护人员主键!=null">
+                AND 医护人员主键 = #{condition.医护人员主键}
+            </if>
+            <if test="condition.时间点!=null">
+                AND 时间点 = #{condition.时间点}
+            </if>
+            <if test="condition.星期!=null">
+                AND 星期 = #{condition.星期}
+            </if>
+            <if test="condition.第几周!=null">
+                AND 第几周 = #{condition.第几周}
+            </if>
+            <if test="condition.创建人!=null">
+                AND 创建人 = #{condition.创建人}
+            </if>
+            <if test="condition.创建时间!=null">
+                AND 创建时间 = #{condition.创建时间}
+            </if>
+            <if test="condition.修改人!=null">
+                AND 修改人 = #{condition.修改人}
+            </if>
+            <if test="condition.修改时间!=null">
+                AND 修改时间 = #{condition.修改时间}
+            </if>
+            <if test="condition.状态!=null">
+                AND 状态 = #{condition.状态}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.room.Scheduling">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_room_scheduling
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.目标类型!=null">
+                AND 目标类型 = #{condition.目标类型}
+            </if>
+            <if test="condition.目标主键!=null">
+                AND 目标主键 = #{condition.目标主键}
+            </if>
+            <if test="condition.医护人员主键!=null">
+                AND 医护人员主键 = #{condition.医护人员主键}
+            </if>
+            <if test="condition.时间点!=null">
+                AND 时间点 = #{condition.时间点}
+            </if>
+            <if test="condition.星期!=null">
+                AND 星期 = #{condition.星期}
+            </if>
+            <if test="condition.第几周!=null">
+                AND 第几周 = #{condition.第几周}
+            </if>
+            <if test="condition.创建人!=null">
+                AND 创建人 = #{condition.创建人}
+            </if>
+            <if test="condition.创建时间!=null">
+                AND 创建时间 = #{condition.创建时间}
+            </if>
+            <if test="condition.修改人!=null">
+                AND 修改人 = #{condition.修改人}
+            </if>
+            <if test="condition.修改时间!=null">
+                AND 修改时间 = #{condition.修改时间}
+            </if>
+            <if test="condition.状态!=null">
+                AND 状态 = #{condition.状态}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM fs_room_scheduling
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="目标类型!=null">
+               ${groupOp} 目标类型 ${目标类型.op}  #{目标类型.data}
+           </if>
+           <if test="目标主键!=null">
+               ${groupOp} 目标主键 ${目标主键.op}  #{目标主键.data}
+           </if>
+           <if test="医护人员主键!=null">
+               ${groupOp} 医护人员主键 ${医护人员主键.op}  #{医护人员主键.data}
+           </if>
+           <if test="时间点!=null">
+               ${groupOp} 时间点 ${时间点.op}  #{时间点.data}
+           </if>
+           <if test="星期!=null">
+               ${groupOp} 星期 ${星期.op}  #{星期.data}
+           </if>
+           <if test="第几周!=null">
+               ${groupOp} 第几周 ${第几周.op}  #{第几周.data}
+           </if>
+           <if test="创建人!=null">
+               ${groupOp} 创建人 ${创建人.op}  #{创建人.data}
+           </if>
+           <if test="创建时间!=null">
+               ${groupOp} 创建时间 ${创建时间.op}  #{创建时间.data}
+           </if>
+           <if test="修改人!=null">
+               ${groupOp} 修改人 ${修改人.op}  #{修改人.data}
+           </if>
+           <if test="修改时间!=null">
+               ${groupOp} 修改时间 ${修改时间.op}  #{修改时间.data}
+           </if>
+           <if test="状态!=null">
+               ${groupOp} 状态 ${状态.op}  #{状态.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM fs_room_scheduling
+    </select>
+   
+</mapper>

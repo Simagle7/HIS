@@ -22,6 +22,7 @@ public enum ERRORCODE {
     VERIFIEDCODE_ILLEGAL("0100012","该验证码不合法"),
     CATEGORY_EXIST("0100013", "分类名称已存在"),
     TOKEN_INVALID("0100014", "凭证已过期"),
+    CATEGORY_NAME_EXISTS("0100015", "分类标签已存在")
 
     ;
 

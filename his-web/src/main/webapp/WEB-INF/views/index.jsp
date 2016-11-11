@@ -61,7 +61,10 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="rescuer" data-index="0">医疗人员管理</a>
+                            <a class="J_menuItem" href="/rest/category/list" >分类标签管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="rescuer" >医疗人员管理</a>
                         </li>
                         <%--<li>--%>
                             <%--<a class="J_menuItem" href="index_v2.html">主页示例二</a>--%>

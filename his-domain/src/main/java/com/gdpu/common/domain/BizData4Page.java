@@ -22,7 +22,7 @@ public class BizData4Page<T> implements Serializable {
     public BizData4Page(){}
 
     public int getOffset() {
-        return offset;
+        return offset+1;
     }
 
     public void setOffset(int offset) {
