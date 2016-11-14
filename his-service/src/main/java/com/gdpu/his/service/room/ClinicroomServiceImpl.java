@@ -29,14 +29,18 @@ import com.gdpu.his.domain.room.Clinicroom;
 import com.gdpu.his.domain.room.ClinicroomEx;
 import com.gdpu.his.domain.room.SchedulingEx;
 import com.gdpu.his.domain.sys.Category;
+import com.gdpu.his.param.medical.MedicalHistoryParam;
 import com.gdpu.his.param.room.ClinicroomParam;
+import com.gdpu.his.param.sys.CategoryParam;
 import com.gdpu.his.service.AbstractHISPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 ;
 
@@ -131,17 +135,17 @@ public class ClinicroomServiceImpl extends AbstractHISPageService<IHISBaseDAO<Cl
         //科室类型主键
         mav.addObject("clinicroom", clinicroom);
         //封装早上的排班数据
-        mav.addObject("mooningScheduling", getSchedule4Init(clinicroom.getId(), 0));
+        mav.addObject("mooningScheduling", getSchedule4Init(clinicroom.getId(), 0, CommonUtils.calendar.get(Calendar.WEEK_OF_YEAR)));
 //        //封装下午的排班数据
-        mav.addObject("afternoonScheduling", getSchedule4Init(clinicroom.getId(), 1));
+        mav.addObject("afternoonScheduling", getSchedule4Init(clinicroom.getId(), 1, CommonUtils.calendar.get(Calendar.WEEK_OF_YEAR)));
 //        //封装晚上的排班数据
-        mav.addObject("nightScheduling", getSchedule4Init(clinicroom.getId(), 2));
+        mav.addObject("nightScheduling", getSchedule4Init(clinicroom.getId(), 2, CommonUtils.calendar.get(Calendar.WEEK_OF_YEAR)));
 
         return mav;
     }
 
-    private List<SchedulingEx> getSchedule4Init(Integer roomId, Integer dayPoint) {
-        List<SchedulingEx> queryResult = schedulingDAO.findSchedules(roomId, dayPoint);
+    private List<SchedulingEx> getSchedule4Init(Integer roomId, Integer dayPoint, int week) {
+        List<SchedulingEx> queryResult = schedulingDAO.findSchedules(roomId, dayPoint, week);
         List<SchedulingEx> result = new ArrayList<>();
         for (int i = 0; true; i++) {
             for (int j = 0; j < queryResult.size(); j++) {
@@ -169,5 +173,18 @@ public class ClinicroomServiceImpl extends AbstractHISPageService<IHISBaseDAO<Cl
             scheduling.setDay(i);
             data.add(scheduling);
         }
+    }
+
+    @Override
+    public ModelAndView getRooms(MedicalHistoryParam param, int pageNo, int pageSize) {
+        ModelAndView mav = new ModelAndView("appointment/list");
+        mav.addObject("categories", categoryDAO.findList(CategoryParam.F_Type, 0, null, null));
+        List<ClinicroomEx> clinicrooms = clinicroomDAO.queryPageEx(param.toMap(), (pageNo - 1) * pageSize, pageSize);
+        for (ClinicroomEx item: clinicrooms){
+            item.setWaitingCount(new Random().nextInt(20));
+        }
+        int records = clinicroomDAO.countEx(param.toMap());
+        mav.addObject("data", PageUtils.toBizData4Page(clinicrooms, pageNo, pageSize, records));
+        return mav;
     }
 }

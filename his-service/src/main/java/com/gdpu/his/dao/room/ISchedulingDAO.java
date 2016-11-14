@@ -45,7 +45,8 @@ public interface ISchedulingDAO extends IHISBaseDAO<Scheduling> {
      * 查询医护人员排班信息（用于回显）
      * @param roomId        科室主键
      * @param dayPoint      代表一天的早上，下午和晚上，依次值为0,1,2
+     * @param week 周数
      * @return 返回，排班信息列表
      */
-    List<SchedulingEx> findSchedules(@Param("roomId") Integer roomId, @Param("dayPoint") Integer dayPoint);
+    List<SchedulingEx> findSchedules(@Param("roomId") Integer roomId, @Param("dayPoint") Integer dayPoint, @Param("week") int week);
 }

@@ -8,14 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科室管理管理页面</title>
+    <title>病人管理页面</title>
     <link rel="shortcut icon" href="favicon.ico"/>
     <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet"/>
@@ -70,7 +68,7 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>科室管理</h5>
+            <h5>病人管理</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -87,12 +85,10 @@
                         <div class="example">
                             <div>
                                 <form id="searchForm">
-                                    <span><b>科室名称：</b></span>
-                                    <label class="search-label"><input class="form-control input-outline" type="text"
-                                                                       name="name"></label>
-                                    <span><b>科室号：</b></span>
-                                    <label class="search-label"><input class="form-control input-outline" type="text"
-                                                                       name="name"></label>
+                                    <span><b>名称：</b></span>
+                                    <label class="search-label"><input class="form-control input-outline" type="text" name="name"></label>
+                                    <span><b>电话：</b></span>
+                                    <label class="search-label"><input class="form-control input-outline" type="text" name="phone"></label>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="queryPage()">查询</button>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="clear()">重置</button>
                                 </form>
@@ -120,12 +116,14 @@
                             <thead>
                             <tr>
                                 <th width="2%"><input type="checkbox"></th>
-                                <th width="15%">科室名称</th>
-                                <th width="10%">科室号</th>
-                                <th width="10%">科室类型</th>
-                                <th width="33%">科室位置</th>
-                                <%--<th width="15%">科室代码</th>--%>
-                                <th width="5%">状态</th>
+                                <th width="8%">姓名</th>
+                                <th width="4%">性别</th>
+                                <th width="4%">年龄</th>
+                                <th width="25%">住址</th>
+                                <th width="8%">可靠程度</th>
+                                <th width="8%">联系人</th>
+                                <th width="10%">电话</th>
+                                <th width="8%">状态</th>
                                 <th width="25%">操作</th>
                             </tr>
                             </thead>
@@ -134,17 +132,35 @@
                                 <tr>
                                     <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
                                     <td><c:out value="${el.name}" /></td>
-
-                                    <td><c:out value="${el.clinicNum}" /></td>
-                                    <td><c:out value="${el.categoryName}" /></td>
+                                    <td>
+                                        <c:if test="${el.sex == false}">
+                                            <i class="fa fa-mars" style="color: #0e9aef"></i>男
+                                        </c:if>
+                                        <c:if test="${el.sex == true}">
+                                            <i class="fa fa-venus" style="color: #ec70ef"></i>女
+                                        </c:if>
+                                    </td>
+                                    <td><c:out value="${el.age}" /></td>
                                     <td><c:out value="${el.address}" /></td>
-                                    <%--<td><c:out value="${el.code}" /></td>--%>
+                                    <td>
+                                        <c:if test="${el.dependability == 0}">
+                                            <i class="fa fa-question-circle" style="color:#f7a54a"></i>仅供参考
+                                        </c:if>
+                                        <c:if test="${el.dependability == 1}">
+                                            <i class="fa fa-check-square" style="color: #0e9aef"></i>基本可靠
+                                        </c:if>
+                                        <c:if test="${el.dependability == 2}">
+                                            <i class="fa fa-check-square-o" style="color: #2def79"></i>完全可靠
+                                        </c:if>
+                                    </td>
+                                    <td><c:out value="${el.linkman}" /></td>
+                                    <td><c:out value="${el.phone}" /></td>
                                     <td>
                                         <c:if test="${el.status == 0}">
                                             <span class="label label-info"><i class="fa fa-check"></i>启用</span>
                                         </c:if>
                                         <c:if test="${el.status == 1}">
-                                            <span class="label label-warning"><i class="fa fa-times"></i>停用</span>
+                                            <span class="label label-warning"><i class="fa fa-times"></i>审核</span>
                                         </c:if>
                                     </td>
                                     <td>
@@ -163,18 +179,10 @@
                                             </c:when>
                                             <c:when test="${el.status == 0}">
                                                 <button type="button" class="btn  btn-warning" onclick="disabledOrEnabled(${el.id},1)">
-                                                    停用
+                                                    审核
                                                 </button>
                                             </c:when>
                                         </c:choose>
-                                        <button data-toggle="modal" data-target="#arrangeDoctor" type="button" class="btn btn-info" onclick="loadDoctorBounced(${el.id},${el.categoryId}, ${el.status})">医生排班</button>
-                                        <div class="modal inmodal in" id="arrangeDoctor" tabindex="-1" role="dialog"
-                                             aria-hidden="true" style="display: none;">
-                                        </div>
-                                        <button data-toggle="modal" data-target="#arrangeNurse" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">护士排班</button>
-                                        <div class="modal inmodal in" id="arrangeNurse" tabindex="-1" role="dialog"
-                                             aria-hidden="true" style="display: none;">
-                                        </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -233,6 +241,6 @@
 <script type="text/javascript" src="/js/plugins/wangEditor/js/wangEditor.min.js"></script>
 <!--引入本地js-->
 <script type="text/javascript" src="/js/common.js"></script>
-<script type="text/javascript"  src="/js/module/clinicRoom/list.js"></script>
+<script type="text/javascript" src="/js/module/medical/list.js"></script>
 </body>
 </html>

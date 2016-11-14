@@ -23,6 +23,7 @@ import com.gdpu.common.domain.BaseDomain;
 import com.gdpu.common.service.IPageService;
 import com.gdpu.his.dao.IHISBaseDAO;
 import com.gdpu.his.domain.room.Clinicroom;
+import com.gdpu.his.param.medical.MedicalHistoryParam;
 import com.gdpu.his.param.room.ClinicroomParam;
 import com.gdpu.his.service.IHISBaseService;
 import org.springframework.web.servlet.ModelAndView;
@@ -87,4 +88,13 @@ public interface IClinicroomService<D extends IHISBaseDAO<T>, T extends BaseDoma
      * @return  返回，视图与数据
      */
     ModelAndView loadDoctorBounced(Clinicroom clinicroom);
+
+    /**
+     * 获得科室信息
+     * @param param     查询条件
+     * @param pageNo    页码
+     * @param pageSize  页大小
+     * @return  返回，视图与数据
+     */
+    ModelAndView getRooms(MedicalHistoryParam param, int pageNo, int pageSize);
 }

@@ -10,20 +10,10 @@ function loadAddBounced() {
 function loadUpdateBounced(id) {
     $("#update").load('update', {id: id});
 }
-function loadDoctorBounced(id,categoryId,status) {
-    if(status == 1){    //如果科室是被禁用的话将无法进行排班
-        swal({title:"当前科室处于停用状态！无法进行排班！", type:"warning"});
-        $('#update').modal('hide');
-        return;
-    }else {
-        $("#arrangeDoctor").load('loadDoctorBounced',{id:id,categoryId: categoryId});
-    }
-}
-
 function disabledOrEnabled(id, status) {
-    var text = status == 1 ? "停用" : "启用";
+    var text = status == 1 ? "审核" : "启用";
     swal({
-        title: "确定要" + text + "该科室？",
+        title: "确定要" + text + "该标签？",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
@@ -39,7 +29,7 @@ function disabledOrEnabled(id, status) {
                 if (isSuccess(result)) {
                     //todo 回调跳转到列表页
                     setTimeout(function () {
-                        window.location.href = "/rest/clinicRoom/list";
+                        window.location.href = "/rest/medicalHistory/list";
                     }, 500);
                 } else {
                     swal({title: result.msg, type: "error"});
@@ -50,7 +40,7 @@ function disabledOrEnabled(id, status) {
 }
 function deleteOne(id) {
     swal({
-        title: "确定删除该科室？",
+        title: "确定删除该病人？",
         text: "删除后将无法恢复，请谨慎操作！",
         type: "error",
         showCancelButton: true,
@@ -68,7 +58,7 @@ function deleteOne(id) {
                 if (isSuccess(result)) {
                     //todo 回调跳转到列表页
                     setTimeout(function () {
-                        window.location.href = "/rest/clinicRoom/list";
+                        window.location.href = "/rest/medicalHistory/list";
                     }, 500);
                 } else {
                     swal({title: result.msg, type: "error"});
@@ -84,7 +74,7 @@ function deleteOne(id) {
  */
 $("#pageSize").change(function () {
     pageSize = $(this).children('option:selected').val();
-    window.location.href = "/rest/clinicRoom/list?pageNo=" + pageNo + "&pageSize=" + pageSize;
+    window.location.href = "/rest/medicalHistory/list?pageNo=" + pageNo + "&pageSize=" + pageSize;
 });
 
 /**
@@ -94,7 +84,8 @@ var queryPage = function () {
     searchForm = $("#searchForm").serialize();
     searchForm += "&pageNo=" + pageNo;
     searchForm += "&pageSize=" + pageSize;
-    window.location.href = "/rest/clinicRoom/list?" + searchForm;
+    window.location.href = encodeURI("/rest/medicalHistory/list?" + searchForm);
+    // window.location.href = "/rest/medicalHistory/list?" + searchForm;
 };
 
 /**

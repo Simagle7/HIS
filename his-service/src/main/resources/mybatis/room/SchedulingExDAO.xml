@@ -15,7 +15,7 @@
       SELECT frs.*, fri.name AS rescuerName FROM
         fs_room_scheduling frs LEFT JOIN fs_rescuer_info fri
         ON frs.rescuerId = fri.id
-        WHERE roomId = #{roomId} AND dayPoint = #{dayPoint}
+        WHERE roomId = #{roomId} AND dayPoint = #{dayPoint} and week = #{week}
         ORDER BY day
     </select>
 </mapper>

@@ -71,7 +71,7 @@ public class CommonUtils {
         return rtn;
     }
 
-    private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Shanghai"));
+    public static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Shanghai"));
     private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
     /**

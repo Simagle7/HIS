@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科室管理管理页面</title>
+    <title>预约管理页面</title>
     <link rel="shortcut icon" href="favicon.ico"/>
     <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet"/>
@@ -70,7 +70,7 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>科室管理</h5>
+            <h5>病人预约</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -87,12 +87,18 @@
                         <div class="example">
                             <div>
                                 <form id="searchForm">
-                                    <span><b>科室名称：</b></span>
-                                    <label class="search-label"><input class="form-control input-outline" type="text"
-                                                                       name="name"></label>
-                                    <span><b>科室号：</b></span>
-                                    <label class="search-label"><input class="form-control input-outline" type="text"
-                                                                       name="name"></label>
+                                    <span><b>科目：</b></span>
+                                    <label class="search-label">
+                                        <select name="categoryId" class="form-control">
+                                            <option value="-1">请选择</option>
+                                            <c:forEach items="${categories}" var="el">
+                                                <option value="${el.id}">${el.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
+                                    <%--<span><b>科室号：</b></span>--%>
+                                    <%--<label class="search-label"><input class="form-control input-outline" type="text"--%>
+                                                                       <%--name="name"></label>--%>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="queryPage()">查询</button>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="clear()">重置</button>
                                 </form>
@@ -124,9 +130,9 @@
                                 <th width="10%">科室号</th>
                                 <th width="10%">科室类型</th>
                                 <th width="33%">科室位置</th>
-                                <%--<th width="15%">科室代码</th>--%>
+                                <th width="8%">待诊人数</th>
                                 <th width="5%">状态</th>
-                                <th width="25%">操作</th>
+                                <th width="32%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -138,43 +144,17 @@
                                     <td><c:out value="${el.clinicNum}" /></td>
                                     <td><c:out value="${el.categoryName}" /></td>
                                     <td><c:out value="${el.address}" /></td>
-                                    <%--<td><c:out value="${el.code}" /></td>--%>
+                                    <td><c:out value="${el.waitingCount}" /></td>
                                     <td>
                                         <c:if test="${el.status == 0}">
-                                            <span class="label label-info"><i class="fa fa-check"></i>启用</span>
+                                            <span class="label label-info"><i class="fa fa-check"></i>可预约</span>
                                         </c:if>
                                         <c:if test="${el.status == 1}">
-                                            <span class="label label-warning"><i class="fa fa-times"></i>停用</span>
+                                            <span class="label label-warning"><i class="fa fa-times"></i>暂停服务</span>
                                         </c:if>
                                     </td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">修改</button>
-                                        <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
-                                             aria-hidden="true" style="display: none;">
-                                        </div>
-                                        <c:choose>
-                                            <c:when test="${el.status == 1}">
-                                                <button type="button" class="btn  btn-info" onclick="disabledOrEnabled(${el.id},0)">
-                                                    启用
-                                                </button>
-                                                <button type="button" class="btn  btn-danger" onclick="deleteOne(${el.id})">
-                                                    删除
-                                                </button>
-                                            </c:when>
-                                            <c:when test="${el.status == 0}">
-                                                <button type="button" class="btn  btn-warning" onclick="disabledOrEnabled(${el.id},1)">
-                                                    停用
-                                                </button>
-                                            </c:when>
-                                        </c:choose>
-                                        <button data-toggle="modal" data-target="#arrangeDoctor" type="button" class="btn btn-info" onclick="loadDoctorBounced(${el.id},${el.categoryId}, ${el.status})">医生排班</button>
-                                        <div class="modal inmodal in" id="arrangeDoctor" tabindex="-1" role="dialog"
-                                             aria-hidden="true" style="display: none;">
-                                        </div>
-                                        <button data-toggle="modal" data-target="#arrangeNurse" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">护士排班</button>
-                                        <div class="modal inmodal in" id="arrangeNurse" tabindex="-1" role="dialog"
-                                             aria-hidden="true" style="display: none;">
-                                        </div>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="appointing(${el.id},${el.categoryId},${el.status})">预约</button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -233,6 +213,6 @@
 <script type="text/javascript" src="/js/plugins/wangEditor/js/wangEditor.min.js"></script>
 <!--引入本地js-->
 <script type="text/javascript" src="/js/common.js"></script>
-<script type="text/javascript"  src="/js/module/clinicRoom/list.js"></script>
+<script type="text/javascript"  src="/js/module/appointment/list.js"></script>
 </body>
 </html>

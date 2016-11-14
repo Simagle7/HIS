@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdpu.his.dao.medical.IMedicalHistoryDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        name,
+        sex,
+        age,
+        career,
+        address,
+        isMarried,
+        dependability,
+        nativePlace,
+        linkman,
+        nation,
+        phone,
+        medicalCard,
+        detailId,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        status
+    </sql>
+    <insert id="insert" parameterType="com.gdpu.his.domain.medical.MedicalHistory">
+        INSERT INTO fs_medical_history (
+		    name
+		    ,sex
+		    ,age
+		    ,career
+		    ,address
+		    ,isMarried
+		    ,dependability
+		    ,nativePlace
+		    ,linkman
+		    ,nation
+		    ,phone
+		    ,medicalCard
+		    ,detailId
+		    ,creator
+		    ,createDate
+		    ,lastModifier
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{name}
+		    	,#{sex}
+		    	,#{age}
+		    	,#{career}
+		    	,#{address}
+		    	,#{isMarried}
+		    	,#{dependability}
+		    	,#{nativePlace}
+		    	,#{linkman}
+		    	,#{nation}
+		    	,#{phone}
+		    	,#{medicalCard}
+		    	,#{detailId}
+		    	,#{creator}
+		    	,#{createDate}
+		    	,#{lastModifier}
+		    	,#{lastModDate}
+		    	,#{status}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO fs_medical_history (
+		    name
+		    ,sex
+		    ,age
+		    ,career
+		    ,address
+		    ,isMarried
+		    ,dependability
+		    ,nativePlace
+		    ,linkman
+		    ,nation
+		    ,phone
+		    ,medicalCard
+		    ,detailId
+		    ,creator
+		    ,createDate
+		    ,lastModifier
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{map.name}
+		    	,#{map.sex}
+		    	,#{map.age}
+		    	,#{map.career}
+		    	,#{map.address}
+		    	,#{map.isMarried}
+		    	,#{map.dependability}
+		    	,#{map.nativePlace}
+		    	,#{map.linkman}
+		    	,#{map.nation}
+		    	,#{map.phone}
+		    	,#{map.medicalCard}
+		    	,#{map.detailId}
+		    	,#{map.creator}
+		    	,#{map.createDate}
+		    	,#{map.lastModifier}
+		    	,#{map.lastModDate}
+		    	,#{map.status}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="com.gdpu.his.domain.medical.MedicalHistory">
+        UPDATE fs_medical_history
+        <trim prefix="SET" suffixOverrides=",">
+		    name=#{name},
+		    sex=#{sex},
+		    age=#{age},
+		    career=#{career},
+		    address=#{address},
+		    isMarried=#{isMarried},
+		    dependability=#{dependability},
+		    nativePlace=#{nativePlace},
+		    linkman=#{linkman},
+		    nation=#{nation},
+		    phone=#{phone},
+		    medicalCard=#{medicalCard},
+		    detailId=#{detailId},
+		    creator=#{creator},
+		    createDate=#{createDate},
+		    lastModifier=#{lastModifier},
+		    lastModDate=#{lastModDate},
+		    status=#{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE fs_medical_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.sex!=null">
+                sex = #{map.sex},
+            </if>
+            <if test="map.age!=null">
+                age = #{map.age},
+            </if>
+            <if test="map.career!=null">
+                career = #{map.career},
+            </if>
+            <if test="map.address!=null">
+                address = #{map.address},
+            </if>
+            <if test="map.isMarried!=null">
+                isMarried = #{map.isMarried},
+            </if>
+            <if test="map.dependability!=null">
+                dependability = #{map.dependability},
+            </if>
+            <if test="map.nativePlace!=null">
+                nativePlace = #{map.nativePlace},
+            </if>
+            <if test="map.linkman!=null">
+                linkman = #{map.linkman},
+            </if>
+            <if test="map.nation!=null">
+                nation = #{map.nation},
+            </if>
+            <if test="map.phone!=null">
+                phone = #{map.phone},
+            </if>
+            <if test="map.medicalCard!=null">
+                medicalCard = #{map.medicalCard},
+            </if>
+            <if test="map.detailId!=null">
+                detailId = #{map.detailId},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE fs_medical_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.sex!=null">
+                sex = #{update.sex},
+            </if>
+            <if test="update.age!=null">
+                age = #{update.age},
+            </if>
+            <if test="update.career!=null">
+                career = #{update.career},
+            </if>
+            <if test="update.address!=null">
+                address = #{update.address},
+            </if>
+            <if test="update.isMarried!=null">
+                isMarried = #{update.isMarried},
+            </if>
+            <if test="update.dependability!=null">
+                dependability = #{update.dependability},
+            </if>
+            <if test="update.nativePlace!=null">
+                nativePlace = #{update.nativePlace},
+            </if>
+            <if test="update.linkman!=null">
+                linkman = #{update.linkman},
+            </if>
+            <if test="update.nation!=null">
+                nation = #{update.nation},
+            </if>
+            <if test="update.phone!=null">
+                phone = #{update.phone},
+            </if>
+            <if test="update.medicalCard!=null">
+                medicalCard = #{update.medicalCard},
+            </if>
+            <if test="update.detailId!=null">
+                detailId = #{update.detailId},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.career!=null">
+                AND career = #{condition.career}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.isMarried!=null">
+                AND isMarried = #{condition.isMarried}
+            </if>
+            <if test="condition.dependability!=null">
+                AND dependability = #{condition.dependability}
+            </if>
+            <if test="condition.nativePlace!=null">
+                AND nativePlace = #{condition.nativePlace}
+            </if>
+            <if test="condition.linkman!=null">
+                AND linkman = #{condition.linkman}
+            </if>
+            <if test="condition.nation!=null">
+                AND nation = #{condition.nation}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.medicalCard!=null">
+                AND medicalCard = #{condition.medicalCard}
+            </if>
+            <if test="condition.detailId!=null">
+                AND detailId = #{condition.detailId}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="com.gdpu.his.domain.medical.MedicalHistory">
+        UPDATE fs_medical_history
+        <trim prefix="SET" suffixOverrides=",">
+            name = #{name},
+            sex = #{sex},
+            age = #{age},
+            career = #{career},
+            address = #{address},
+            isMarried = #{isMarried},
+            dependability = #{dependability},
+            nativePlace = #{nativePlace},
+            linkman = #{linkman},
+            nation = #{nation},
+            phone = #{phone},
+            medicalCard = #{medicalCard},
+            detailId = #{detailId},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            status = #{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM fs_medical_history
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="name!=null">
+                AND name = #{name}
+            </if>
+            <if test="sex!=null">
+                AND sex = #{sex}
+            </if>
+            <if test="age!=null">
+                AND age = #{age}
+            </if>
+            <if test="career!=null">
+                AND career = #{career}
+            </if>
+            <if test="address!=null">
+                AND address = #{address}
+            </if>
+            <if test="isMarried!=null">
+                AND isMarried = #{isMarried}
+            </if>
+            <if test="dependability!=null">
+                AND dependability = #{dependability}
+            </if>
+            <if test="nativePlace!=null">
+                AND nativePlace = #{nativePlace}
+            </if>
+            <if test="linkman!=null">
+                AND linkman = #{linkman}
+            </if>
+            <if test="nation!=null">
+                AND nation = #{nation}
+            </if>
+            <if test="phone!=null">
+                AND phone = #{phone}
+            </if>
+            <if test="medicalCard!=null">
+                AND medicalCard = #{medicalCard}
+            </if>
+            <if test="detailId!=null">
+                AND detailId = #{detailId}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM fs_medical_history WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.name!=null">
+                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.sex!=null">
+                ${condition.groupOp}   sex  ${condition.sex.op}  #{condition.sex.data}
+            </if>
+            <if test="condition.age!=null">
+                ${condition.groupOp}   age  ${condition.age.op}  #{condition.age.data}
+            </if>
+            <if test="condition.career!=null">
+                ${condition.groupOp}   career  ${condition.career.op}  #{condition.career.data}
+            </if>
+            <if test="condition.address!=null">
+                ${condition.groupOp}   address  ${condition.address.op}  #{condition.address.data}
+            </if>
+            <if test="condition.isMarried!=null">
+                ${condition.groupOp}   isMarried  ${condition.isMarried.op}  #{condition.isMarried.data}
+            </if>
+            <if test="condition.dependability!=null">
+                ${condition.groupOp}   dependability  ${condition.dependability.op}  #{condition.dependability.data}
+            </if>
+            <if test="condition.nativePlace!=null">
+                ${condition.groupOp}   nativePlace  ${condition.nativePlace.op}  #{condition.nativePlace.data}
+            </if>
+            <if test="condition.linkman!=null">
+                ${condition.groupOp}   linkman  ${condition.linkman.op}  #{condition.linkman.data}
+            </if>
+            <if test="condition.nation!=null">
+                ${condition.groupOp}   nation  ${condition.nation.op}  #{condition.nation.data}
+            </if>
+            <if test="condition.phone!=null">
+                ${condition.groupOp}   phone  ${condition.phone.op}  #{condition.phone.data}
+            </if>
+            <if test="condition.medicalCard!=null">
+                ${condition.groupOp}   medicalCard  ${condition.medicalCard.op}  #{condition.medicalCard.data}
+            </if>
+            <if test="condition.detailId!=null">
+                ${condition.groupOp}   detailId  ${condition.detailId.op}  #{condition.detailId.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="name!=null">
+                AND name like CONCAT('%', #{name} , '%')
+            </if>
+            <if test="sex!=null">
+                AND sex like CONCAT('%', #{sex} , '%')
+            </if>
+            <if test="age!=null">
+                AND age like CONCAT('%', #{age} , '%')
+            </if>
+            <if test="career!=null">
+                AND career like CONCAT('%', #{career} , '%')
+            </if>
+            <if test="address!=null">
+                AND address like CONCAT('%', #{address} , '%')
+            </if>
+            <if test="isMarried!=null">
+                AND isMarried like CONCAT('%', #{isMarried} , '%')
+            </if>
+            <if test="dependability!=null">
+                AND dependability like CONCAT('%', #{dependability} , '%')
+            </if>
+            <if test="nativePlace!=null">
+                AND nativePlace like CONCAT('%', #{nativePlace} , '%')
+            </if>
+            <if test="linkman!=null">
+                AND linkman like CONCAT('%', #{linkman} , '%')
+            </if>
+            <if test="nation!=null">
+                AND nation like CONCAT('%', #{nation} , '%')
+            </if>
+            <if test="phone!=null">
+                AND phone like CONCAT('%', #{phone} , '%')
+            </if>
+            <if test="medicalCard!=null">
+                AND medicalCard like CONCAT('%', #{medicalCard} , '%')
+            </if>
+            <if test="detailId!=null">
+                AND detailId like CONCAT('%', #{detailId} , '%')
+            </if>
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.career!=null">
+                AND career = #{condition.career}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.isMarried!=null">
+                AND isMarried = #{condition.isMarried}
+            </if>
+            <if test="condition.dependability!=null">
+                AND dependability = #{condition.dependability}
+            </if>
+            <if test="condition.nativePlace!=null">
+                AND nativePlace = #{condition.nativePlace}
+            </if>
+            <if test="condition.linkman!=null">
+                AND linkman = #{condition.linkman}
+            </if>
+            <if test="condition.nation!=null">
+                AND nation = #{condition.nation}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.medicalCard!=null">
+                AND medicalCard = #{condition.medicalCard}
+            </if>
+            <if test="condition.detailId!=null">
+                AND detailId = #{condition.detailId}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="com.gdpu.his.domain.medical.MedicalHistory">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fs_medical_history
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.career!=null">
+                AND career = #{condition.career}
+            </if>
+            <if test="condition.address!=null">
+                AND address = #{condition.address}
+            </if>
+            <if test="condition.isMarried!=null">
+                AND isMarried = #{condition.isMarried}
+            </if>
+            <if test="condition.dependability!=null">
+                AND dependability = #{condition.dependability}
+            </if>
+            <if test="condition.nativePlace!=null">
+                AND nativePlace = #{condition.nativePlace}
+            </if>
+            <if test="condition.linkman!=null">
+                AND linkman = #{condition.linkman}
+            </if>
+            <if test="condition.nation!=null">
+                AND nation = #{condition.nation}
+            </if>
+            <if test="condition.phone!=null">
+                AND phone = #{condition.phone}
+            </if>
+            <if test="condition.medicalCard!=null">
+                AND medicalCard = #{condition.medicalCard}
+            </if>
+            <if test="condition.detailId!=null">
+                AND detailId = #{condition.detailId}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM fs_medical_history
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="name!=null">
+               ${groupOp} name ${name.op}  #{name.data}
+           </if>
+           <if test="sex!=null">
+               ${groupOp} sex ${sex.op}  #{sex.data}
+           </if>
+           <if test="age!=null">
+               ${groupOp} age ${age.op}  #{age.data}
+           </if>
+           <if test="career!=null">
+               ${groupOp} career ${career.op}  #{career.data}
+           </if>
+           <if test="address!=null">
+               ${groupOp} address ${address.op}  #{address.data}
+           </if>
+           <if test="isMarried!=null">
+               ${groupOp} isMarried ${isMarried.op}  #{isMarried.data}
+           </if>
+           <if test="dependability!=null">
+               ${groupOp} dependability ${dependability.op}  #{dependability.data}
+           </if>
+           <if test="nativePlace!=null">
+               ${groupOp} nativePlace ${nativePlace.op}  #{nativePlace.data}
+           </if>
+           <if test="linkman!=null">
+               ${groupOp} linkman ${linkman.op}  #{linkman.data}
+           </if>
+           <if test="nation!=null">
+               ${groupOp} nation ${nation.op}  #{nation.data}
+           </if>
+           <if test="phone!=null">
+               ${groupOp} phone ${phone.op}  #{phone.data}
+           </if>
+           <if test="medicalCard!=null">
+               ${groupOp} medicalCard ${medicalCard.op}  #{medicalCard.data}
+           </if>
+           <if test="detailId!=null">
+               ${groupOp} detailId ${detailId.op}  #{detailId.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM fs_medical_history
+    </select>
+   
+</mapper>
