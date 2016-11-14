@@ -219,11 +219,12 @@
                                     <td><c:out value="${el.major}" /></td>
                                     <td><c:out value="${el.code}" /></td>
                                     <td>
+
                                         <c:if test="${el.status == 0}">
-                                            <span class="status status-info"><i class="fa fa-check"></i>正常</span>
+                                            <span class="label label-info"><i class="fa fa-check"></i>正常</span>
                                         </c:if>
                                         <c:if test="${el.status == 1}">
-                                            <span class="status status-warning"><i class="fa fa-times"></i>停职</span>
+                                            <span class="label label-warning"><i class="fa fa-times"></i>停职</span>
                                         </c:if>
                                     </td>
                                     <td>
@@ -248,7 +249,11 @@
                                                 </button>
                                             </c:when>
                                         </c:choose>
+                                        <button data-toggle="modal" data-target="#addRelation" type="button" class="btn btn-info" onclick="loadRelation(<c:out value="${el.id}"/>)">设置标签</button>
+                                        <div class="modal inmodal in" id="addRelation" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
 
+                                        </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -294,14 +299,20 @@
 <!-- End Panel Other -->
 </div>
 
-<script src="/js/jquery.min.js?v=2.1.4"></script>
-<script src="/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="/js/content.min.js?v=1.0.0"></script>
-<script src="/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js?v=2.1.4"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script type="text/javascript" src="/js/content.min.js?v=1.0.0"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript" src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="/lib/zTree/js/jquery.ztree.all-3.5.js"></script>
+<script type="text/javascript" src="/lib/zTree/js/jquery.ztree.exhide-3.5.min.js"></script>
+<script type="text/javascript" src="/lib/qtip/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="/js/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/js/plugins/wangEditor/js/wangEditor.min.js"></script>
 <!--引入本地js-->
+<script type="text/javascript" src="/js/common.js"></script>
 <script src="/js/module/userManager/rescuer.js"></script>
 </body>
 </html>

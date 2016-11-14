@@ -71,7 +71,7 @@ public class CommonUtils {
         return rtn;
     }
 
-    private static Calendar calendar = Calendar.getInstance();
+    private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Shanghai"));
     private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
     /**
@@ -163,6 +163,28 @@ public class CommonUtils {
 //            Date date = randomDate("2016-08-20", "2016-09-10");
 //            System.out.println(format.format(date));
 //        }
-        System.out.println(getPassword("123123", "simagle"));
+//        System.out.println(getPassword("123123", "simagle"));
+        getTime(0);
+    }
+
+    public static Long getTime(Integer day) {
+        calendar.setFirstDayOfWeek(Calendar.MONDAY); //以周1为首日
+        switch (day){
+            case 0:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                     return calendar.getTimeInMillis();
+            case 1:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+                     return calendar.getTimeInMillis();
+            case 2:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                return calendar.getTimeInMillis();
+            case 3:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+                return calendar.getTimeInMillis();
+            case 4:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                return calendar.getTimeInMillis();
+            case 5:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+                return calendar.getTimeInMillis();
+            case 6:  calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                return calendar.getTimeInMillis();
+            default: throw new BizException(ERRORCODE.PARAM_ISERROR.getCode(), ERRORCODE.PARAM_ISERROR.getMessage());
+        }
     }
 }

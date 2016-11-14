@@ -49,4 +49,16 @@ public interface IRescuerDAO extends IHISBaseDAO<Rescuer> {
      * @return  返回，统计结果
      */
     int countEx(@Param("condition")Map<String, Object> condition);
+
+    /**
+     * 排班：获取医护人员列表
+     * @param categoryId    分类标签id
+     * @param week          第几周
+     * @param day           星期几，0表示星期1，以此类推
+     * @param dayPoint      代表一天的早上，下午和晚上，依次值为0,1,2
+     * @param category      类别，false：医生，true：护士
+     * @return 返回，医护人员列表
+     */
+    List<Rescuer> queryRescuers(@Param("categoryId") Integer categoryId,@Param("week") int week, @Param("day") int day, @Param("dayPoint") int dayPoint, @Param("category") Boolean category);
+
 }

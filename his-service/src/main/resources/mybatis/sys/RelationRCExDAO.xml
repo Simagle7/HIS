@@ -3,5 +3,12 @@
 
 <mapper namespace="com.gdpu.his.dao.sys.IRelationRCDAO">
 	<!-- 在这里存放用户自定义的映射配置（注：RelationRCDAO.xml里各节点的ID不能在这里重复出现）  -->
-	
+
+    <insert id="addRelations">
+        INSERT INTO fs_sys_relationrc (categoryId,rescuerId,creator,createDate,status)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.categoryId},#{item.rescuerId},#{item.creator},#{item.createDate},#{item.status})
+        </foreach>
+    </insert>
 </mapper>

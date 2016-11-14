@@ -88,7 +88,8 @@ public class CategoryServiceImpl extends AbstractHISPageService<IHISBaseDAO<Cate
 
     @Override
     public String updateCategory(CategoryParam param, AccountDto currentUser) {
-        if(!this.findOne(CategoryParam.F_Name, param.getName()).getId().equals(param.getId())){
+        Category category = this.findOne(CategoryParam.F_Name, param.getName());
+        if( category != null && !category.getId().equals(param.getId())){
             throw new BizException(ERRORCODE.CATEGORY_NAME_EXISTS.getCode(), ERRORCODE.CATEGORY_NAME_EXISTS.getMessage());
         }
         param.setLastModDate(System.currentTimeMillis());

@@ -2,8 +2,9 @@ package com.gdpu.controller.login;
 
 import com.gdpu.common.utils.User.UserContext;
 import com.gdpu.his.domain.sys.Rescuer;
+import com.gdpu.his.param.sys.RelationRCParamEx;
 import com.gdpu.his.param.sys.RescuerParam;
-import com.gdpu.his.service.doctor.IDoctorService;
+import com.gdpu.his.service.sys.IRelationRCService;
 import com.gdpu.his.service.sys.IRescuerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private IDoctorService doctorService;
+    private IRelationRCService relationRCService;
     @Autowired
     private IRescuerService rescuerService;
 
@@ -109,14 +110,42 @@ public class UserController {
         return rescuerService.disabledOrEnabled(id, status);
     }
 
+    /**
+     * 删除一条医护人员信息
+     * @param id        医护人员主键
+     * @return  返回，操作码
+     */
     @ResponseBody
     @RequestMapping(value = "/deleteOne")
     public String deleteOne(long id){
         return rescuerService.deleteOne(id);
     }
 
+    /**
+     * 加载分类标签框
+     * @param id    医护人员主键
+     * @return  返回，视图与数据模型
+     */
+    @RequestMapping(value = "/loadRelation")
+    public ModelAndView loadRelation(Long id){
+        return rescuerService.loadRelation(id);
+    }
 
+    /**
+     * 批量添加关系
+     * @param paramEx 关系参数
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addRelation", method = RequestMethod.POST)
+    public String addRelaiton(RelationRCParamEx paramEx){
+        return relationRCService.addRelation(paramEx, UserContext.getCurrentUser());
+    }
 
+    /**
+     * 欢迎页
+     * @return  返回视图
+     */
     @RequestMapping(value = "/welcome")
     public String welcome() {
         return "welcome";

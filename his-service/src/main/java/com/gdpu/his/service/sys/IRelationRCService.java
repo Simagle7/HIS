@@ -18,16 +18,26 @@
 
 package com.gdpu.his.service.sys;
 
+import com.gdpu.common.domain.AccountDto;
 import com.gdpu.common.domain.BaseDomain;;
 import com.gdpu.his.dao.IHISBaseDAO;
+import com.gdpu.his.param.sys.RelationRCParamEx;
 import com.gdpu.his.service.IHISBaseService;
 import com.gdpu.common.service.IPageService;
 
- /**
+/**
  * 《医疗人员标签关系（fs_sys_relationRC）》 业务逻辑服务接口
- * @author 郭旭辉
  *
+ * @author 郭旭辉
  */
-public interface IRelationRCService<D extends IHISBaseDAO<T>, T extends BaseDomain> extends IHISBaseService<D, T>,IPageService<D, T>{
+public interface IRelationRCService<D extends IHISBaseDAO<T>, T extends BaseDomain> extends IHISBaseService<D, T>, IPageService<D, T> {
 
+    /**
+     * 保存医护人员和分类标签的关联关系
+     *
+     * @param paramEx     保存参数
+     * @param currentUser 当前操作者
+     * @return 返回，操作码
+     */
+    String addRelation(RelationRCParamEx paramEx, AccountDto currentUser);
 }

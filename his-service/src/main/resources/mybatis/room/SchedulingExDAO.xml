@@ -3,5 +3,19 @@
 
 <mapper namespace="com.gdpu.his.dao.room.ISchedulingDAO">
 	<!-- 在这里存放用户自定义的映射配置（注：SchedulingDAO.xml里各节点的ID不能在这里重复出现）  -->
-	
+
+    <insert id="addSchedules">
+        INSERT INTO fs_room_scheduling (roomId,rescuerId,timePoint,dayPoint,day,week,creator,createDate,status)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.roomId},#{item.rescuerId},#{item.timePoint},#{item.dayPoint},#{item.day},#{item.week},#{item.creator},#{item.createDate},#{item.status})
+        </foreach>
+    </insert>
+    <select id="findSchedules" resultType="com.gdpu.his.domain.room.SchedulingEx">
+      SELECT frs.*, fri.name AS rescuerName FROM
+        fs_room_scheduling frs LEFT JOIN fs_rescuer_info fri
+        ON frs.rescuerId = fri.id
+        WHERE roomId = #{roomId} AND dayPoint = #{dayPoint}
+        ORDER BY day
+    </select>
 </mapper>

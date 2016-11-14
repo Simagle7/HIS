@@ -20,13 +20,33 @@ package com.gdpu.his.dao.room;
 
 import com.gdpu.his.dao.IHISBaseDAO;
 import com.gdpu.his.domain.room.Clinicroom;
+import com.gdpu.his.domain.room.ClinicroomEx;
+import org.apache.ibatis.annotations.Param;
 
- /**
+import java.util.List;
+import java.util.Map;
+
+/**
  * 《科室》 数据访问接口
- * @author 郭旭辉
  *
+ * @author 郭旭辉
  */
 public interface IClinicroomDAO extends IHISBaseDAO<Clinicroom> {
 
 
+    /**
+     * 分页获取科室列表
+     * @param condition     查询条件
+     * @param offset        偏移量
+     * @param rows          行号
+     * @return  返回，分页列表
+     */
+    List<ClinicroomEx> queryPageEx(@Param("condition") Map<String, Object> condition, @Param("offset") int offset, @Param("rows") int rows);
+
+    /**
+     * 统计
+     * @param condition     查询条件
+     * @return  返回，统计结果
+     */
+    int countEx(@Param("condition") Map<String, Object> condition);
 }

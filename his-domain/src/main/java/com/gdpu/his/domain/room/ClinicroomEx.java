@@ -18,13 +18,6 @@
 
 package com.gdpu.his.domain.room;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.util.*;
-
 /**
  * 《科室》扩展实体
  * @author 郭旭辉
@@ -34,4 +27,14 @@ public class ClinicroomEx extends Clinicroom {
 	private static final long serialVersionUID = 1L;
 	
 	//针对Clinicroom实体在这里增加额外的属性和对应的get和set方法
+
+	private String categoryName;		//分类名称
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 }

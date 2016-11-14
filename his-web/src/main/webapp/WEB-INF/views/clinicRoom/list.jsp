@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医疗人员管理页面</title>
+    <title>科室管理管理页面</title>
     <link rel="shortcut icon" href="favicon.ico"/>
     <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet"/>
@@ -70,7 +70,7 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>分类标签管理</h5>
+            <h5>科室管理</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -87,17 +87,12 @@
                         <div class="example">
                             <div>
                                 <form id="searchForm">
-                                    <span><b>名称：</b></span>
+                                    <span><b>科室名称：</b></span>
                                     <label class="search-label"><input class="form-control input-outline" type="text"
                                                                        name="name"></label>
-                                    <span><b>标签类型：</b></span>
-                                    <label class="search-label">
-                                        <select class="form-control" name="type">
-                                            <option value="-1">默认</option>
-                                            <option value="0">专业标签</option>
-                                            <option value="1">职务标签</option>
-                                        </select>
-                                    </label>
+                                    <span><b>科室号：</b></span>
+                                    <label class="search-label"><input class="form-control input-outline" type="text"
+                                                                       name="name"></label>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="queryPage()">查询</button>
                                     <button type="button" class="btn btn-w-m btn-primary btn-width" onclick="clear()">重置</button>
                                 </form>
@@ -125,13 +120,13 @@
                             <thead>
                             <tr>
                                 <th width="2%"><input type="checkbox"></th>
-                                <th width="15%">标签名称</th>
-                                <th width="10%">标签类型</th>
-                                <th width="25%">描述</th>
-                                <th width="5%">排序</th>
-                                <th width="15%">创建时间</th>
-                                <th width="8%">状态</th>
-                                <th width="20%">操作</th>
+                                <th width="15%">科室名称</th>
+                                <th width="10%">科室号</th>
+                                <th width="10%">科室类型</th>
+                                <th width="33%">科室位置</th>
+                                <%--<th width="15%">科室代码</th>--%>
+                                <th width="5%">状态</th>
+                                <th width="25%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -140,21 +135,10 @@
                                     <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
                                     <td><c:out value="${el.name}" /></td>
 
-                                    <td>
-                                        <c:if test="${el.type == 0}">
-                                            专业标签
-                                        </c:if>
-                                        <c:if test="${el.type == 1}">
-                                            职务标签
-                                        </c:if>
-                                    </td>
-                                    <td><c:out value="${el.description}" /></td>
-                                    <td><c:out value="${el.priority}" /></td>
-                                    <td>
-                                        <jsp:useBean id="myDate" class="java.util.Date"/>
-                                        <c:set target="${myDate}" property="time" value="${el.createDate}"/>
-                                        <fmt:formatDate pattern="yyyy-MM-dd" value="${myDate}" type="both"/>
-                                    </td>
+                                    <td><c:out value="${el.clinicNum}" /></td>
+                                    <td><c:out value="${el.categoryName}" /></td>
+                                    <td><c:out value="${el.address}" /></td>
+                                    <%--<td><c:out value="${el.code}" /></td>--%>
                                     <td>
                                         <c:if test="${el.status == 0}">
                                             <span class="label label-info"><i class="fa fa-check"></i>启用</span>
@@ -183,6 +167,14 @@
                                                 </button>
                                             </c:when>
                                         </c:choose>
+                                        <button data-toggle="modal" data-target="#arrangeDoctor" type="button" class="btn btn-info" onclick="loadDoctorBounced(<c:out value="${el.id}"/>,<c:out value="${el.categoryId}"/>)">医生排班</button>
+                                        <div class="modal inmodal in" id="arrangeDoctor" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
+                                        </div>
+                                        <button data-toggle="modal" data-target="#arrangeNurse" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">护士排班</button>
+                                        <div class="modal inmodal in" id="arrangeNurse" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
+                                        </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -241,6 +233,6 @@
 <script type="text/javascript" src="/js/plugins/wangEditor/js/wangEditor.min.js"></script>
 <!--引入本地js-->
 <script type="text/javascript" src="/js/common.js"></script>
-<script type="text/javascript"  src="/js/module/category/list.js"></script>
+<script type="text/javascript"  src="/js/module/clinicRoom/list.js"></script>
 </body>
 </html>

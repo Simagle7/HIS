@@ -3,5 +3,34 @@
 
 <mapper namespace="com.gdpu.his.dao.room.IClinicroomDAO">
 	<!-- 在这里存放用户自定义的映射配置（注：ClinicroomDAO.xml里各节点的ID不能在这里重复出现）  -->
-	
+
+    <select id="queryPageEx" resultType="com.gdpu.his.domain.room.ClinicroomEx">
+        SELECT frc.*, fsc.name as categoryName FROM fs_room_clinicroom  frc LEFT JOIN fs_sys_category fsc
+        ON frc.categoryId = fsc.id
+        <where>
+            <if test="condition.name != null and condition.name != ''">
+                name like '%${condition.name}%'
+            </if>
+            <if test="condition.clinicNum != null and condition.clinicNum != ''">
+                AND clinicNum = #{condition.clinicNum}
+            </if>
+        </where>
+        order by priority asc, createDate desc
+        <if test="offset != null">
+            limit ${offset},${rows}
+        </if>
+    </select>
+
+    <select id="countEx" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM fs_sys_category
+        <where>
+            <if test="condition.name != null and condition.name != ''">
+                name like '%${condition.name}%'
+            </if>
+            <if test="condition.clinicNum != null and condition.clinicNum != ''">
+                AND clinicNum = #{condition.clinicNum}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -83,4 +83,11 @@ public interface IRescuerService<D extends IHISBaseDAO<T>, T extends BaseDomain>
      * @return  返回， 视图模型
      */
     String deleteOne(long id);
+
+    /**
+     * 加载标签关系添加视图
+     * @param id    医护人员主键id
+     * @return  返回，视图与数据
+     */
+    ModelAndView loadRelation(Long id);
 }

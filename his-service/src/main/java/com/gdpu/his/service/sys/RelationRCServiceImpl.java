@@ -18,22 +18,30 @@
 
 package com.gdpu.his.service.sys;
 
+import com.gdpu.common.domain.AccountDto;
+import com.gdpu.common.exception.BizException;
+import com.gdpu.common.utils.DataStatusEnum;
+import com.gdpu.common.utils.ERRORCODE;
+import com.gdpu.common.utils.RETURNCODE;
 import com.gdpu.his.dao.IHISBaseDAO;
 import com.gdpu.his.dao.sys.IRelationRCDAO;
 import com.gdpu.his.domain.sys.RelationRC;
+import com.gdpu.his.param.sys.RelationRCParam;
+import com.gdpu.his.param.sys.RelationRCParamEx;
 import com.gdpu.his.service.AbstractHISPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-;
+import java.util.ArrayList;
+import java.util.List;
 
- /**
+/**
  * 《医疗人员标签关系（fs_sys_relationRC）》 业务逻辑服务类
- * @author 郭旭辉
  *
+ * @author 郭旭辉
  */
 @Service("RelationRCServiceImpl")
-public class RelationRCServiceImpl extends AbstractHISPageService<IHISBaseDAO<RelationRC>, RelationRC> implements IRelationRCService<IHISBaseDAO<RelationRC>,RelationRC>{
+public class RelationRCServiceImpl extends AbstractHISPageService<IHISBaseDAO<RelationRC>, RelationRC> implements IRelationRCService<IHISBaseDAO<RelationRC>, RelationRC> {
     @Autowired
     private IRelationRCDAO relationRCDAO;
 
@@ -42,4 +50,25 @@ public class RelationRCServiceImpl extends AbstractHISPageService<IHISBaseDAO<Re
         return relationRCDAO;
     }
 
+    @Override
+    public String addRelation(RelationRCParamEx paramEx, AccountDto currentUser) {
+        RelationRC relationRC;
+        List<RelationRC> saveLists = new ArrayList<>();
+        for (Integer id : paramEx.getCategoryIds()) {
+            relationRC = new RelationRC();
+            relationRC.setCategoryId(id);
+            relationRC.setRescuerId(paramEx.getRescuerId());
+            relationRC.setCreateDate(System.currentTimeMillis());
+            relationRC.setCreator(currentUser.getUid());
+            relationRC.setStatus(DataStatusEnum.ENABLED.getValue());
+            saveLists.add(relationRC);
+        }
+        //先删除关系
+        if(relationRCDAO.deleteByProperty(RelationRCParam.F_RescuerId, paramEx.getRescuerId()) > 0){
+            if (relationRCDAO.addRelations(saveLists) > 0) {    //保持关系
+                return RETURNCODE.ADD_COMPLETE.getMessage();
+            }
+        }
+        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+    }
 }

@@ -18,13 +18,6 @@
 
 package com.gdpu.his.domain.room;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.util.*;
-
 /**
  * 《医护人员排班》扩展实体
  * @author 郭旭辉
@@ -34,4 +27,13 @@ public class SchedulingEx extends Scheduling {
 	private static final long serialVersionUID = 1L;
 	
 	//针对Scheduling实体在这里增加额外的属性和对应的get和set方法
+	private String rescuerName;		//医护人员的姓名
+
+	public String getRescuerName() {
+		return rescuerName;
+	}
+
+	public void setRescuerName(String rescuerName) {
+		this.rescuerName = rescuerName;
+	}
 }

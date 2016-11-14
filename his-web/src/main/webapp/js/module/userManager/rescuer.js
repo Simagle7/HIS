@@ -8,6 +8,10 @@
 function loadData(id) {
     $("#update").load('update', {id: id});
 }
+
+function loadRelation(id) {
+    $("#addRelation").load('loadRelation', {id: id});
+}
 function disabledOrEnabled(id, status) {
     var text = status == 1 ? "停职" : "启用";
     swal({

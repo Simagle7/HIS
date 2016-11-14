@@ -18,12 +18,6 @@
 
 package com.gdpu.his.param.room;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-import java.util.*;
-
 /**
  * 《医护人员排班》 查询参数实体
  * @author 郭旭辉
@@ -33,5 +27,23 @@ public class SchedulingParamEx extends SchedulingParam {
 	private static final long serialVersionUID = 1L;
 	
 	//针对SchedulingParam实体在这里增加额外的属性和对应的get和set方法
-	
+
+	private Integer categoryId;
+	private String targetId;
+
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getTargetId() {
+		return targetId;
+	}
+
+	public void setTargetId(String targetId) {
+		this.targetId = targetId;
+	}
 }

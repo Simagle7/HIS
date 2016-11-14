@@ -20,13 +20,32 @@ package com.gdpu.his.dao.room;
 
 import com.gdpu.his.dao.IHISBaseDAO;
 import com.gdpu.his.domain.room.Scheduling;
+import com.gdpu.his.domain.room.SchedulingEx;
+import org.apache.ibatis.annotations.Param;
 
- /**
+import java.util.List;
+
+/**
  * 《医护人员排班》 数据访问接口
- * @author 郭旭辉
  *
+ * @author 郭旭辉
  */
 public interface ISchedulingDAO extends IHISBaseDAO<Scheduling> {
 
 
+    /**
+     * 批量保存排班信息
+     *
+     * @param data 待保存排班列表
+     * @return 返回，非零：成功插入条数，0：失败
+     */
+    int addSchedules(@Param("list") List<Scheduling> data);
+
+    /**
+     * 查询医护人员排班信息（用于回显）
+     * @param roomId        科室主键
+     * @param dayPoint      代表一天的早上，下午和晚上，依次值为0,1,2
+     * @return 返回，排班信息列表
+     */
+    List<SchedulingEx> findSchedules(@Param("roomId") Integer roomId, @Param("dayPoint") Integer dayPoint);
 }

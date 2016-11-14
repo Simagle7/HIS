@@ -29,13 +29,15 @@
 var validator = $("#addItem").validate({
     rules: {
         name: {required: true},
-        type: {required: true, min: 0},
-        priority: {min: 0}
+        clinicNum: {required: true},
+        categoryId:{required: true,min:1},
+        address: {required: true}
     },
     messages: {
-        name: {required: "标签名称不能为空"},
-        type: {required: "未选择分类", min: "未选择分类"},
-        priority: {min: "排序值不能为负数"}
+        name: {required: "科室名称不能为空"},
+        clinicNum: {required: "科室号不能为空"},
+        categoryId: {required: "未选择分类", min: "未选择分类"},
+        address:{required: "地址不能为空"}
 
     },
     errorPlacement: errorPlacement,
@@ -52,17 +54,17 @@ var addItem = function () {
     if (validator.form()) {
         var data = $("#addItem").serialize();
         $.ajax({
-            url: 'addCategory',
+            url: 'addClinicRoom',
             type: 'POST',
             dataType: 'JSON',
             data:data,
             success: function (result) {
                 if(isSuccess(result)){
-                    swal({title:"分类标签添加成功！", type:"success"},function(){
+                    swal({title:"科室添加成功！", type:"success"},function(){
                         //todo 回调跳转到列表页
                         $('#add').modal('hide');
                         setTimeout(function () {
-                            window.location.href = "/rest/category/list";
+                            window.location.href = "/rest/clinicRoom/list";
                         }, 500);
                     });
                 }else{

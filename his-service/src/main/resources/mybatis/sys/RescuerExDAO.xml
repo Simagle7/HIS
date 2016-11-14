@@ -35,4 +35,12 @@
 			</if>
 		</where>
 	</select>
+    <select id="queryRescuers" resultType="com.gdpu.his.domain.sys.Rescuer">
+		SELECT * FROM fs_rescuer_info fri
+		LEFT JOIN fs_sys_relationrc fsr
+		ON fri.id = fsr.categoryId
+		where fsr.categoryId = #{categoryId} and fri.category = #{category}
+		and fri.id not in(select rescuerId from fs_room_scheduling
+		where week  = #{week} AND `day` = #{day} AND dayPoint = #{dayPoint})
+	</select>
 </mapper>

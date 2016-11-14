@@ -18,12 +18,6 @@
 
 package com.gdpu.his.param.sys;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-import java.util.*;
-
 /**
  * 《医疗人员标签关系（fs_sys_relationRC）》 查询参数实体
  * @author 郭旭辉
@@ -33,5 +27,25 @@ public class RelationRCParamEx extends RelationRCParam {
 	private static final long serialVersionUID = 1L;
 	
 	//针对RelationRCParam实体在这里增加额外的属性和对应的get和set方法
-	
+
+	private Long rescuerId;	//当前医护人员的主键id
+	private Integer[] categoryIds;			//分类标签列表
+
+	@Override
+	public Long getRescuerId() {
+		return rescuerId;
+	}
+
+	@Override
+	public void setRescuerId(Long rescuerId) {
+		this.rescuerId = rescuerId;
+	}
+
+	public Integer[] getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(Integer[] categoryIds) {
+		this.categoryIds = categoryIds;
+	}
 }

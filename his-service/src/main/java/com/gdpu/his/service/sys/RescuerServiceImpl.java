@@ -23,8 +23,11 @@ import com.gdpu.common.exception.BizException;
 import com.gdpu.common.utils.*;
 import com.gdpu.common.utils.User.UserContext;
 import com.gdpu.his.dao.IHISBaseDAO;
+import com.gdpu.his.dao.sys.ICategoryDAO;
 import com.gdpu.his.dao.sys.IRescuerDAO;
+import com.gdpu.his.domain.sys.Category;
 import com.gdpu.his.domain.sys.Rescuer;
+import com.gdpu.his.param.sys.CategoryParam;
 import com.gdpu.his.param.sys.RescuerParam;
 import com.gdpu.his.service.AbstractHISPageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +49,8 @@ import java.util.List;
 public class RescuerServiceImpl extends AbstractHISPageService<IHISBaseDAO<Rescuer>, Rescuer> implements IRescuerService<IHISBaseDAO<Rescuer>, Rescuer> {
     @Autowired
     private IRescuerDAO rescuerDAO;
+    @Autowired
+    private ICategoryDAO categoryDAO;
 
     @Override
     public IHISBaseDAO<Rescuer> getDao() {
@@ -125,5 +130,26 @@ public class RescuerServiceImpl extends AbstractHISPageService<IHISBaseDAO<Rescu
             throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
         }
         return RETURNCODE.DELETE_COMPLETE.getMessage();
+    }
+
+    @Override
+    public ModelAndView loadRelation(Long id) {
+        ModelAndView mav = new ModelAndView("userManager/addRelation");
+        //根据id获取当前用户的信息
+        Rescuer rescuer = this.findOne(RescuerParam.F_ID, id);
+
+        //获取专业标签
+        List<Category> majorCategory = categoryDAO.findList(CategoryParam.F_Type, 0, null, null);
+        //获取职务标签
+        List<Category> careerCategory = categoryDAO.findList(CategoryParam.F_Type, 1, null, null);
+
+        //获取已经
+
+        //封装数据
+        mav.addObject("rescuer", rescuer);
+        mav.addObject("majorCategory", majorCategory);
+        mav.addObject("careerCategory", careerCategory);
+
+        return mav;
     }
 }
